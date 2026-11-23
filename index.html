@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<!-- 安全対策：通信してよい相手を限定（GitHub・書籍検索・表紙画像のサイトのみ） -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob: https://images-na.ssl-images-amazon.com https://images-fe.ssl-images-amazon.com https://*.media-amazon.com https://books.google.com https://books.googleusercontent.com https://ndlsearch.ndl.go.jp https://cover.openbd.jp https://covers.openlibrary.org https://archive.org https://*.archive.org; connect-src https://api.github.com https://www.googleapis.com https://api.openbd.jp https://openlibrary.org; manifest-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f1e7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="読書メモ">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEKElEQVR4Xu3asY4bVRiGYQdRcSmRSIEUIYoUUYoI2kiIOhdBTc1FpEb0AVFEKSgitBIF3As1EksA7XqG+cZz5j9n/Dxtdr1Z+9M79pl98PrFwxOc84GnhSnGgXGQUw6Ug5xyoBzklAPlIKccKAc55UA5yCkHykFOOVAOcsqBcpBTDpSDnHKgHOSUA+UgpxwoBznlQDnIKQfKQU45UA5yyoFykFMOlIOccqAc5JQD5SCnHCgHOeVAOcgpB8pBTjlQDnLK8bcvvv/1n2fv6as3+TM56evf/9jw0fb04Z4/rBP/3cGUs/t4+/LZul/h/j6+/fijdQ+1p4OPY8kOlttwMUPM5SDj2HYEkalr0OrM9GO8cRTuIPLvaB5/Fn1jP7oexyg7OKpexmEHdy5PPVyV9h6HESzUw1uZhuOwgxY2/MT0vxyCMck4MA5yyoFykFMOlIOccqAc7/3y43cXzuG3n3+68BFG0fCEtNblI5gxtY9HT57X/tbbGn4cTUeQOlhUhhnHihF8+vlX6au7xFQeDraM06m/cfQzgtTZ0SxfzO1XdnVhKivHuCOI/PVif7P8W7p6N1M2jhmNLgf9uLl59/je3w4+evJ8eWb2UTmOw4/grJubd6fT5D7OfkvVaMoOwa55GbduV7JE1RuRsnFcoftrWL6PEsaxk6kd9LwP49jD/AK63YdxNLfktV/yNfszDiZd3ThWHL7dUfXBcn+V5xxNXT6CGV2dY7Yz/DiajiB1djRVpxSXG2YcK0bQ6JwtvSs7bma6G0c/I0ild2X7z0zZOMYdQWTozJSNY0ajy0FX0syUqBzHNYwgkmamtbJzDstYrurzTtk46J9xMMk4MA5yyoFyvLfi8O0Od2WHd/kIZox7uyRSeQi2iaYjSPV/uyQyzDhWjKDROVt6jjluZrobRz8jSKW3S/rPTNk4xh1BZOjMlI1jRqPLQVfSzJSoHMc1jCCSZqa1skMwy1jOXVm6U1YO+mccTDIOjIPc1ZVjxeHbHe7KDu/yEcwY93ZJpPIQbBNNR5Dq/3ZJZJhxrBhBo3O29Bxz3Mx0N45+RpBKb5f0n5mycYw7gsjQmSkbx4xGl4OupJkpUTmOaxhBJM1Ma2XnHJaxnLuydKesHPTPOJhkHBgHOeVAOcgpB8pBTjlQDnLKgXKQUw6Ug1zlH/sU+uHLT2Z++tuXz+7/69NXbwr/wyUOPo75EUTOLuZ0OvJojjOODXcQOXBmhhxH1Q6WO8Zieh9H/ztYbrjF9DKOI40g0vNbmYJxXO0OIj1kpu047GBbOy/mwesXD7f9BTgMx+dMMg6Mg5xyoBzklAPlIKccKAc55UA5yCkHykFOOVAOcsqBcpBTDpSDnHKgHOSUA+UgpxwoBznlQDnIKQfKQU45UA5yyoFykFMOlIOccqAc5JSDSX8CBsY6WAmKg2gAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEKElEQVR4Xu3asY4bVRiGYQdRcSmRSIEUIYoUUYoI2kiIOhdBTc1FpEb0AVFEKSgitBIF3As1EksA7XqG+cZz5j9n/Dxtdr1Z+9M79pl98PrFwxOc84GnhSnGgXGQUw6Ug5xyoBzklAPlIKccKAc55UA5yCkHykFOOVAOcsqBcpBTDpSDnHKgHOSUA+UgpxwoBznlQDnIKQfKQU45UA5yyoFykFMOlIOccqAc5JQD5SCnHCgHOeVAOcgpB8pBTjlQDnLK8bcvvv/1n2fv6as3+TM56evf/9jw0fb04Z4/rBP/3cGUs/t4+/LZul/h/j6+/fijdQ+1p4OPY8kOlttwMUPM5SDj2HYEkalr0OrM9GO8cRTuIPLvaB5/Fn1jP7oexyg7OKpexmEHdy5PPVyV9h6HESzUw1uZhuOwgxY2/MT0vxyCMck4MA5yyoFykFMOlIOccqAc7/3y43cXzuG3n3+68BFG0fCEtNblI5gxtY9HT57X/tbbGn4cTUeQOlhUhhnHihF8+vlX6au7xFQeDraM06m/cfQzgtTZ0SxfzO1XdnVhKivHuCOI/PVif7P8W7p6N1M2jhmNLgf9uLl59/je3w4+evJ8eWb2UTmOw4/grJubd6fT5D7OfkvVaMoOwa55GbduV7JE1RuRsnFcoftrWL6PEsaxk6kd9LwP49jD/AK63YdxNLfktV/yNfszDiZd3ThWHL7dUfXBcn+V5xxNXT6CGV2dY7Yz/DiajiB1djRVpxSXG2YcK0bQ6JwtvSs7bma6G0c/I0ild2X7z0zZOMYdQWTozJSNY0ajy0FX0syUqBzHNYwgkmamtbJzDstYrurzTtk46J9xMMk4MA5yyoFyvLfi8O0Od2WHd/kIZox7uyRSeQi2iaYjSPV/uyQyzDhWjKDROVt6jjluZrobRz8jSKW3S/rPTNk4xh1BZOjMlI1jRqPLQVfSzJSoHMc1jCCSZqa1skMwy1jOXVm6U1YO+mccTDIOjIPc1ZVjxeHbHe7KDu/yEcwY93ZJpPIQbBNNR5Dq/3ZJZJhxrBhBo3O29Bxz3Mx0N45+RpBKb5f0n5mycYw7gsjQmSkbx4xGl4OupJkpUTmOaxhBJM1Ma2XnHJaxnLuydKesHPTPOJhkHBgHOeVAOcgpB8pBTjlQDnLKgXKQUw6Ug1zlH/sU+uHLT2Z++tuXz+7/69NXbwr/wyUOPo75EUTOLuZ0OvJojjOODXcQOXBmhhxH1Q6WO8Zieh9H/ztYbrjF9DKOI40g0vNbmYJxXO0OIj1kpu047GBbOy/mwesXD7f9BTgMx+dMMg6Mg5xyoBzklAPlIKccKAc55UA5yCkHykFOOVAOcsqBcpBTDpSDnHKgHOSUA+UgpxwoBznlQDnIKQfKQU45UA5yyoFykFMOlIOccqAc5JSDSX8CBsY6WAmKg2gAAAAASUVORK5CYII=">
+<title>読書メモ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e7; --paper2:#fffdf8; --ink:#2b2620; --sub:#7a6f62; --line:#e3d9c8;
+    --accent:#b5532a; --accent-soft:#f3e1d6; --green:#4f7a4a; --green-soft:#e3eedc;
+    --blue:#3f6584; --blue-soft:#dfe9f1; --shadow:0 1px 2px rgba(60,40,20,.08),0 4px 14px rgba(60,40,20,.06);
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.serif{font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif}
+  button,input,select,textarea{font:inherit;color:inherit}
+  button{cursor:pointer}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* header */
+  header{padding-top:env(safe-area-inset-top);position:sticky;top:0;z-index:20;background:rgba(246,241,231,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .head{display:flex;align-items:center;gap:16px;height:64px}
+  .logo{font-size:22px;font-weight:700;letter-spacing:.06em;margin:0;white-space:nowrap}
+  .logo span{color:var(--accent)}
+  nav{display:flex;gap:4px;margin-left:8px}
+  nav button{border:0;background:none;padding:8px 12px;border-radius:8px;color:var(--sub);font-weight:500;white-space:nowrap}
+  nav button.on{background:var(--paper2);color:var(--ink);box-shadow:var(--shadow)}
+  .spacer{flex:1}
+  .btn{border:1px solid var(--line);background:var(--paper2);padding:8px 14px;border-radius:999px;font-weight:500;white-space:nowrap}
+  .btn:hover{border-color:#cdbfa8}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn.ghost{background:none;border-color:transparent;color:var(--sub)}
+  .btn.danger{color:#a33;border-color:#e8c9c9;background:#fff}
+  .btn.sm{padding:4px 10px;font-size:13px}
+
+  .sync-btn{border:1px solid var(--line);background:var(--paper2);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--sub);white-space:nowrap}
+  .sync-btn.s-idle{color:var(--green);border-color:#cfe0c8}
+  .sync-btn.s-dirty,.sync-btn.s-syncing{color:var(--blue)}
+  .sync-btn.s-error,.sync-btn.s-locked{color:#a33;border-color:#e8c9c9;background:#fff6f4}
+  .sync-btn[hidden]{display:none}
+  .field{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--sub)}
+  .field input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff;font-size:14px;color:var(--ink)}
+  .sync-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:620px}
+  .sync-grid .full{grid-column:1/-1}
+  .steps{font-size:14px;margin:8px 0 0;padding-left:20px}
+  .steps li{margin-bottom:6px}
+  .steps code{background:#efe7d9;border-radius:4px;padding:0 5px;font-size:13px}
+  .note-box{background:#fff8ec;border:1px solid #f0dcb8;border-radius:10px;padding:10px 12px;font-size:13px;color:#6b5634;margin:10px 0}
+  main.wrap{padding-top:28px;padding-bottom:80px}
+
+  /* stats + filters */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  .stat{background:var(--paper2);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px}
+  .stat b{display:block;font-family:"Shippori Mincho",serif;font-size:26px;line-height:1.2}
+  .stat small{color:var(--sub);font-size:12px}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+  .chip{border:1px solid var(--line);background:var(--paper2);padding:5px 12px;border-radius:999px;font-size:13px;color:var(--sub)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .search{flex:1;min-width:180px;max-width:280px;margin-left:auto;border:1px solid var(--line);background:var(--paper2);border-radius:999px;padding:6px 14px}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:26px 20px}
+  .card{background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:8px}
+  .card:hover .cover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(60,40,20,.18)}
+  .cover{width:100%;aspect-ratio:2/3;border-radius:4px 8px 8px 4px;overflow:hidden;background:#e9e0cf;box-shadow:var(--shadow);transition:.2s;position:relative}
+  .cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .ph{width:100%;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:14px 12px;color:#fff;font-family:"Shippori Mincho",serif}
+  .ph .t{font-size:15px;line-height:1.4;font-weight:700;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .ph .a{font-size:11px;opacity:.85}
+  .card .ttl{font-weight:700;font-size:14px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .card .meta{font-size:12px;color:var(--sub);line-height:1.4}
+  .badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;font-weight:500}
+  .b-want{background:var(--blue-soft);color:var(--blue)}
+  .b-reading{background:var(--accent-soft);color:var(--accent)}
+  .b-done{background:var(--green-soft);color:var(--green)}
+  .card .counts{font-size:11px;color:var(--sub);display:flex;gap:10px}
+
+  .empty{text-align:center;padding:70px 20px;color:var(--sub)}
+  .empty h2{color:var(--ink);font-size:22px;margin:0 0 8px}
+
+  /* detail */
+  .back{margin-bottom:18px}
+  .detail{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start}
+  .detail .cover{cursor:pointer}
+  .cover-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .dt-title{font-size:28px;line-height:1.35;margin:0 0 6px}
+  .dt-sub{color:var(--sub);font-size:14px;margin-bottom:18px}
+  .fields{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;background:var(--paper2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:26px}
+  .fields label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--sub)}
+  .fields input,.fields select{border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff;font-size:14px}
+  .stars{display:flex;gap:2px}
+  .stars button{border:0;background:none;font-size:20px;padding:0 1px;color:#d8ccb8;line-height:1}
+  .stars button.on{color:#d39a2c}
+
+  .section{margin-bottom:30px}
+  .section h3{font-size:19px;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .section h3 .n{font-family:"Zen Kaku Gothic New",sans-serif;font-size:12px;color:var(--sub);font-weight:500}
+  .section .hint{color:var(--sub);font-size:13px;margin:0 0 12px}
+  .adder{display:flex;gap:8px;margin-bottom:12px;align-items:flex-end}
+  .adder textarea{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;resize:vertical;min-height:46px}
+  .items{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+  .item{background:var(--paper2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start}
+  .item.note{border-left:3px solid var(--accent)}
+  .item .txt{flex:1;white-space:pre-wrap;word-break:break-word}
+  .item .txt[contenteditable="true"]{outline:2px solid var(--accent-soft);border-radius:4px;background:#fff}
+  .item .when{font-size:11px;color:var(--sub);margin-top:2px}
+  .item .ops{display:flex;gap:2px;opacity:.5}
+  .item:hover .ops{opacity:1}
+  .icon{border:0;background:none;padding:2px 6px;border-radius:6px;color:var(--sub);font-size:13px}
+  .icon:hover{background:#efe7d9;color:var(--ink)}
+  .check{width:20px;height:20px;border:2px solid #cbbfa9;border-radius:6px;background:#fff;flex:none;margin-top:3px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;padding:0}
+  .check.on{background:var(--green);border-color:var(--green)}
+  .item.done .txt{color:var(--sub);text-decoration:line-through}
+  .desc{font-size:13px;color:var(--sub);background:var(--paper2);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;max-height:160px;overflow:auto}
+
+  /* actions view */
+  .act-group{margin-bottom:24px}
+  .act-book{display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
+  .act-book .mini{width:30px;aspect-ratio:2/3;border-radius:2px 4px 4px 2px;overflow:hidden;background:#e9e0cf;flex:none}
+  .act-book .mini img{width:100%;height:100%;object-fit:cover}
+  .act-book b{font-family:"Shippori Mincho",serif}
+
+  /* calendar */
+  .cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .cal-nav{display:flex;align-items:center;gap:8px}
+  .cal-nav h2{margin:0 6px;font-size:24px;min-width:150px;text-align:center}
+  .cal-nav .btn.sm{font-size:16px;padding:2px 12px}
+  .cal-mode{display:flex;gap:6px}
+  .cal-year{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-bottom:16px;background:var(--paper2);border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px 6px}
+  .cy{border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:6px}
+  .cy-bar{width:60%;max-width:22px;height:34px;display:flex;align-items:flex-end;background:#f0e8da;border-radius:3px;overflow:hidden}
+  .cy-bar i{display:block;width:100%;background:#d9b49c;border-radius:3px 3px 0 0}
+  .cy.on .cy-bar i{background:var(--accent)}
+  .cy-n{font-size:11px;font-weight:700;height:14px;line-height:14px}
+  .cy-l{font-size:11px;color:var(--sub)}
+  .cy.on .cy-l{color:var(--accent);font-weight:700}
+  .cal{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line);gap:1px}
+  .cal-w{background:#efe7d8;text-align:center;font-size:12px;font-weight:700;padding:6px 0;color:var(--sub)}
+  .cal-cell{background:var(--paper2);min-height:118px;padding:6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+  .cal-cell.out{background:#f3ede2}
+  .cal-cell.today{box-shadow:inset 0 0 0 2px var(--accent)}
+  .cal-d{font-size:12px;font-weight:700;color:var(--sub);line-height:1}
+  .cal-cell.has .cal-d{color:var(--ink)}
+  .cal-d{display:flex;align-items:baseline;gap:4px;min-width:0}
+  .cal-hol{font-size:10px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .sun{color:#b5452a !important}
+  .sat{color:#3f6584 !important}
+  .cal-books{flex:1;display:flex;gap:4px;align-items:flex-start;justify-content:center;flex-wrap:wrap;position:relative}
+  .cal-cover{border:0;padding:0;background:#e9e0cf;aspect-ratio:2/3;border-radius:2px 4px 4px 2px;overflow:hidden;box-shadow:0 1px 3px rgba(60,40,20,.25);transition:transform .15s}
+  .cal-cover:hover{transform:translateY(-2px) scale(1.04);z-index:2}
+  .cal-cover img{width:100%;height:100%;object-fit:cover;display:block}
+  .cal-cover .ph{padding:4px}
+  .cal-cover .ph .t{font-size:9px;-webkit-line-clamp:4}
+  .cal-cover .ph .a{display:none}
+  .cal-books.n1 .cal-cover{width:62%;max-width:64px}
+  .cal-books.n2 .cal-cover{width:calc(50% - 2px);max-width:48px}
+  .cal-books.n3 .cal-cover{width:calc(33% - 3px);max-width:38px}
+  .cal-more{position:absolute;right:0;bottom:0;background:var(--ink);color:#fff;font-size:10px;border-radius:999px;padding:0 6px}
+  .cal-list{margin-top:26px}
+  .cal-list h3{font-size:19px;margin:0 0 10px}
+  .cal-list h3 .n{font-family:"Zen Kaku Gothic New",sans-serif;font-size:12px;color:var(--sub);font-weight:500}
+  .cal-list .hint{color:var(--sub);font-size:14px}
+  .cal-row{cursor:pointer;align-items:center}
+  .cal-row:hover{border-color:#cdbfa8}
+  .cal-row .mini{width:40px;aspect-ratio:2/3;flex:none;border-radius:2px 4px 4px 2px;overflow:hidden;background:#e9e0cf}
+  .cal-row .mini img{width:100%;height:100%;object-fit:cover;display:block}
+  .cal-row .mini .ph{padding:3px}.cal-row .mini .ph .t{font-size:8px}.cal-row .mini .ph .a{display:none}
+
+  @media (max-width:720px){
+    .cal-cell{min-height:76px;padding:3px}
+    .cal-hol{display:none}
+    .cal-nav h2{font-size:19px;min-width:120px}
+    .cal-books{flex-wrap:nowrap;justify-content:flex-start;gap:0}
+    .cal-books .cal-cover{width:62% !important;max-width:none !important;flex:none}
+    .cal-books.n1{justify-content:center}
+    .cal-books.n2 .cal-cover + .cal-cover{margin-left:-28%}
+    .cal-books.n3 .cal-cover + .cal-cover{margin-left:-45%}
+    .cal-year{gap:2px;padding:8px 6px 4px}
+  }
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(40,30,20,.35);display:flex;align-items:flex-start;justify-content:center;padding:6vh 16px;z-index:50;overflow:auto}
+  .modal{background:var(--paper);border-radius:16px;width:100%;max-width:680px;box-shadow:0 20px 60px rgba(0,0,0,.25);padding:22px}
+  .modal h2{margin:0 0 4px;font-size:21px}
+  .modal .hint{color:var(--sub);font-size:13px;margin:0 0 14px}
+  .srow{display:flex;gap:8px}
+  .srow input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:#fff;font-size:15px}
+  .results{margin-top:16px;display:flex;flex-direction:column;gap:8px;max-height:56vh;overflow:auto}
+  .res{display:flex;gap:12px;align-items:center;text-align:left;background:var(--paper2);border:1px solid var(--line);border-radius:10px;padding:8px}
+  .res:hover{border-color:var(--accent)}
+  .res .mini{width:46px;aspect-ratio:2/3;flex:none;border-radius:2px 4px 4px 2px;overflow:hidden;background:#e9e0cf}
+  .res .mini img{width:100%;height:100%;object-fit:cover}
+  .res b{display:block;line-height:1.4}
+  .res small{color:var(--sub);font-size:12px}
+  .msg{color:var(--sub);font-size:13px;padding:10px 2px}
+  .msg.err{color:#a33}
+  .manual{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .manual input{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff}
+  .manual .full{grid-column:1/-1}
+  .mfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:8px}
+
+  /* settings */
+  .panel{background:var(--paper2);border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+  .panel h3{margin:0 0 6px}
+  .panel p{margin:0 0 12px;color:var(--sub);font-size:14px}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 18px;border-radius:999px;font-size:14px;z-index:99;opacity:0;transition:.25s;pointer-events:none}
+  .toast.show{opacity:1}
+
+  .wrap{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  main.wrap{padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(24px + env(safe-area-inset-bottom))}
+  button,a{-webkit-tap-highlight-color:transparent}
+  @media (max-width:720px){
+    input,select,textarea{font-size:16px !important}
+    .head{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:8px}
+    nav{order:3;width:100%;margin:0}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .detail{grid-template-columns:1fr}
+    .detail>div:first-child{max-width:180px}
+    .fields{grid-template-columns:1fr 1fr}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+    .search{max-width:none;margin-left:0}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head">
+    <h1 class="logo">読書<span>メモ</span></h1>
+    <nav id="nav">
+      <button data-v="shelf">本棚</button>
+      <button data-v="calendar">カレンダー</button>
+      <button data-v="actions">行動メモ</button>
+      <button data-v="settings">設定</button>
+    </nav>
+    <div class="spacer"></div>
+    <button class="sync-btn" id="syncBtn" hidden></button>
+    <button class="btn primary" id="addBtn">＋ 本を追加</button>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast"></div>
+<input type="file" id="coverInput" accept="image/*" hidden>
+<input type="file" id="importInput" accept="application/json,.json" hidden>
+
+<script>
+(() => {
+'use strict';
+const KEY = 'reading-notes-v1';
+const STATUS = { want:'読みたい', reading:'読書中', done:'読了' };
+const PALETTE = ['#7d4b3a','#3f5d6b','#5b6b43','#6b4e6e','#8a6a2f','#3e4f74','#7a3f45','#4a6b63'];
+
+/* ---------- state ---------- */
+let books = load();
+let view = 'shelf';        // shelf | detail | actions | settings
+let currentId = null;
+let filter = 'all';
+let query = '';
+let showDoneActions = false;
+let coverTarget = null;
+
+function load(){
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; }
+}
+function saveLocal(){
+  try { localStorage.setItem(KEY, JSON.stringify(books)); }
+  catch(e){ toast('保存に失敗しました（容量不足の可能性）。表紙画像を小さくするか、バックアップを取ってください'); }
+}
+// 端末に保存し、同期が有効ならGitHubへの送信を予約
+function save(){ saveLocal(); scheduleSync(); }
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const today = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtDate = s => s ? s.replace(/-/g,'/') : '';
+const getBook = id => books.find(b => b.id === id);
+function touch(b){ b.updatedAt = Date.now(); save(); }
+
+/* =====================================================================
+   GitHub同期（暗号化）
+   - データはブラウザ内で AES-GCM-256 で暗号化してから GitHub に保存
+   - 鍵はパスワードから PBKDF2-SHA256（60万回）で作る。パスワードは送信しない
+   - 本ごとに updatedAt が新しいほうを採用。削除は「削除記録」で伝える
+   - 版番号(sha)が合わない＝他の端末が先に保存 → 読み直してマージし再保存
+   ===================================================================== */
+const KEY_SYNC = 'reading-notes-sync';        // {owner, repo, path, token}
+const KEY_PASS = 'reading-notes-sync-pass';
+const KEY_DEL  = 'reading-notes-deleted';     // {bookId: 削除した時刻}
+const PBKDF2_ITER = 600000;
+const ENC_FORMAT = 'reading-notes-encrypted';
+const readJSON = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch(e){ return d; } };
+let deleted  = readJSON(KEY_DEL, {});
+let syncCfg  = readJSON(KEY_SYNC, null);
+let syncPass = (() => { try { return localStorage.getItem(KEY_PASS) || sessionStorage.getItem(KEY_PASS) || ''; } catch(e){ return ''; } })();
+let syncState = { status: 'off', at: 0, msg: '' };   // off | locked | idle | dirty | syncing | error
+let syncTimer = null, syncRunning = false, syncAgain = false;
+const keyCache = new Map();
+
+const syncReady = () => !!(syncCfg && syncCfg.token && syncPass);
+function saveDeleted(){ try { localStorage.setItem(KEY_DEL, JSON.stringify(deleted)); } catch(e){} }
+function markDeleted(id){ deleted[id] = Date.now(); saveDeleted(); }
+function storePass(pass, remember){
+  try {
+    localStorage.removeItem(KEY_PASS); sessionStorage.removeItem(KEY_PASS);
+    if (pass) (remember ? localStorage : sessionStorage).setItem(KEY_PASS, pass);
+  } catch(e){}
+  syncPass = pass;
+}
+function syncErr(code, message){ const e = new Error(message); e.code = code; return e; }
+
+/* base64 */
+function bytesToB64(bytes){ let s = ''; for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s); }
+function b64ToBytes(b64){ const s = atob(String(b64).replace(/\s/g,'')); const out = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) out[i] = s.charCodeAt(i); return out; }
+const utf8ToB64 = str => bytesToB64(new TextEncoder().encode(str));
+const b64ToUtf8 = b64 => new TextDecoder().decode(b64ToBytes(b64));
+
+/* 暗号化 */
+async function deriveKey(pass, saltB64, iter){
+  const ck = saltB64 + ':' + iter + ':' + pass;
+  if (keyCache.has(ck)) return keyCache.get(ck);
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', hash: 'SHA-256', salt: b64ToBytes(saltB64), iterations: iter },
+    base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  keyCache.set(ck, key);
+  return key;
+}
+async function encryptPayload(obj, pass, saltB64){
+  saltB64 = saltB64 || bytesToB64(crypto.getRandomValues(new Uint8Array(16)));
+  const key = await deriveKey(pass, saltB64, PBKDF2_ITER);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(JSON.stringify(obj))));
+  return { format: ENC_FORMAT, v: 1, cipher: 'AES-GCM-256', kdf: { name: 'PBKDF2-SHA256', iter: PBKDF2_ITER, salt: saltB64 }, iv: bytesToB64(iv), data: bytesToB64(ct) };
+}
+async function decryptEnvelope(env, pass){
+  if (!env || env.format !== ENC_FORMAT || !env.kdf) throw syncErr('format', 'GitHub上のファイルが読書メモの同期データではありません。ファイル名を確認してください');
+  const key = await deriveKey(pass, env.kdf.salt, env.kdf.iter);
+  let pt;
+  try { pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64ToBytes(env.iv) }, key, b64ToBytes(env.data)); }
+  catch(e){ throw syncErr('badpass', 'パスワードが違います（GitHub上のデータを復号できませんでした）'); }
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+
+/* GitHub API */
+const repoPath = cfg => `/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}`;
+const filePath = cfg => repoPath(cfg) + '/contents/' + cfg.path.split('/').map(encodeURIComponent).join('/');
+function gh(cfg, path, opts = {}){
+  const headers = { 'Accept': 'application/vnd.github+json', 'Authorization': 'Bearer ' + cfg.token };
+  if (opts.body) headers['Content-Type'] = 'application/json';
+  return fetch('https://api.github.com' + path, { ...opts, headers, cache: 'no-store', referrerPolicy: 'no-referrer' });
+}
+async function ghFail(res, what){
+  let detail = ''; try { detail = (await res.json()).message || ''; } catch(e){}
+  if (res.status === 401) return syncErr('auth', 'トークンが無効か、有効期限が切れています（401）。新しいトークンを作って設定し直してください');
+  if (res.status === 403) return syncErr('perm', 'トークンの権限が足りません（403）。Contents を「Read and write」にしたトークンか確認してください');
+  if (res.status === 404) return syncErr('notfound', 'リポジトリが見つかりません（404）。ユーザー名・リポジトリ名と、トークンの対象リポジトリを確認してください');
+  return syncErr('http', `${what}に失敗しました（${res.status}${detail ? ' ' + detail : ''}）`);
+}
+async function fetchRemote(cfg){
+  let res;
+  try { res = await gh(cfg, filePath(cfg)); }
+  catch(e){ throw syncErr('network', 'GitHubに接続できませんでした（オフラインの可能性）'); }
+  if (res.status === 404){
+    const r2 = await gh(cfg, repoPath(cfg));
+    if (!r2.ok) throw await ghFail(r2, 'リポジトリの確認');
+    return { sha: null, env: null };            // リポジトリはあるがファイルはまだ無い
+  }
+  if (!res.ok) throw await ghFail(res, '読み込み');
+  const f = await res.json();
+  let b64 = f.content;
+  if (!b64 || f.encoding !== 'base64'){         // 1MBを超えると本文が省略されるので blob から取得
+    const rb = await gh(cfg, repoPath(cfg) + '/git/blobs/' + f.sha);
+    if (!rb.ok) throw await ghFail(rb, '読み込み');
+    b64 = (await rb.json()).content;
+  }
+  let env; try { env = JSON.parse(b64ToUtf8(b64)); } catch(e){ env = null; }
+  if (!env) throw syncErr('format', 'GitHub上のファイルが読書メモの同期データではありません。ファイル名を確認してください');
+  return { sha: f.sha, env };
+}
+async function putRemote(cfg, env, sha){
+  const body = { message: '読書メモを更新 ' + new Date().toLocaleString('ja-JP'), content: utf8ToB64(JSON.stringify(env)) };
+  if (sha) body.sha = sha;
+  let res;
+  try { res = await gh(cfg, filePath(cfg), { method: 'PUT', body: JSON.stringify(body) }); }
+  catch(e){ throw syncErr('network', 'GitHubに接続できませんでした（オフラインの可能性）'); }
+  if (res.status === 409 || res.status === 422) return false;   // 版番号が古い → 読み直してやり直す
+  if (!res.ok) throw await ghFail(res, '保存');
+  return true;
+}
+
+/* マージ：本ごとに新しいほう。削除記録が本の更新より新しければ削除 */
+function mergeData(localBooks, localDel, remoteBooks, remoteDel){
+  const del = { ...remoteDel };
+  for (const [id, t] of Object.entries(localDel)) if (!del[id] || t > del[id]) del[id] = t;
+  const yearAgo = Date.now() - 365 * 864e5;
+  for (const id of Object.keys(del)) if (del[id] < yearAgo) delete del[id];
+  const map = new Map();
+  for (const b of remoteBooks) map.set(b.id, b);
+  for (const b of localBooks){ const r = map.get(b.id); if (!r || (b.updatedAt || 0) >= (r.updatedAt || 0)) map.set(b.id, b); }
+  const out = [];
+  for (const b of map.values()) if (!(del[b.id] && del[b.id] >= (b.updatedAt || 0))) out.push(b);
+  return { books: out, deleted: del };
+}
+// 画面が持っている本オブジェクトを壊さないよう、その場で書き換える
+function applyMerged(merged){
+  const order = new Map(books.map((b, i) => [b.id, i]));
+  const byId = new Map(books.map(b => [b.id, b]));
+  let changed = merged.length !== books.length;
+  const next = merged.map(m => {
+    const cur = byId.get(m.id);
+    if (!cur){ changed = true; return m; }
+    if (cur !== m && JSON.stringify(cur) !== JSON.stringify(m)){
+      Object.keys(cur).forEach(k => delete cur[k]); Object.assign(cur, m); changed = true;
+    }
+    return cur;
+  }).sort((a, b) => (order.has(a.id) ? order.get(a.id) : -1) - (order.has(b.id) ? order.get(b.id) : -1));
+  books.splice(0, books.length, ...next);
+  return changed;
+}
+function sameData(m, r){
+  const rb = new Map((r.books || []).map(b => [b.id, JSON.stringify(b)]));
+  if (rb.size !== m.books.length) return false;
+  for (const b of m.books) if (rb.get(b.id) !== JSON.stringify(b)) return false;
+  const rd = r.deleted || {}, md = m.deleted;
+  return Object.keys(md).length === Object.keys(rd).length && Object.keys(md).every(k => md[k] === rd[k]);
+}
+
+function scheduleSync(ms = 2500){
+  if (!syncReady()) return;
+  setSync('dirty');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => syncNow(false), ms);
+}
+async function syncNow(manual){
+  if (!syncReady()) return;
+  if (syncRunning){ syncAgain = true; return; }
+  clearTimeout(syncTimer);
+  syncRunning = true; setSync('syncing');
+  const cfg = syncCfg, pass = syncPass;
+  try {
+    for (let attempt = 0; ; attempt++){
+      const { sha, env } = await fetchRemote(cfg);
+      const remote = env ? await decryptEnvelope(env, pass) : { books: [], deleted: {} };
+      const m = mergeData(books, deleted, remote.books || [], remote.deleted || {});
+      deleted = m.deleted; saveDeleted();
+      if (applyMerged(m.books)){ saveLocal(); refreshView(); }
+      if (env && sameData(m, remote)) break;                       // GitHubと同じ＝送る必要なし
+      const newEnv = await encryptPayload({ app: 'reading-notes', v: 1, savedAt: Date.now(), books, deleted }, pass,
+                                          env && env.kdf && env.kdf.iter === PBKDF2_ITER ? env.kdf.salt : null);
+      if (await putRemote(cfg, newEnv, sha)) break;
+      if (attempt >= 3) throw syncErr('conflict', '他の端末との保存が重なりました。少し待ってから「今すぐ同期」を押してください');
+      await new Promise(r => setTimeout(r, 400 + Math.random() * 600));
+    }
+    setSync('idle');
+    if (manual) toast('同期しました');
+  } catch(e){
+    if (e.code === 'badpass'){ storePass('', false); setSync('locked', e.message); }
+    else setSync('error', e.message);
+    if (manual || e.code === 'badpass' || e.code === 'auth') toast(e.message);
+  } finally {
+    syncRunning = false;
+    if (syncAgain){ syncAgain = false; scheduleSync(300); }
+  }
+}
+function refreshView(){
+  // 入力中なら画面を描き直さない（データは書き換え済みなので、次の画面遷移で反映される）
+  const a = document.activeElement;
+  if (a && (a.tagName === 'TEXTAREA' || a.tagName === 'INPUT' || a.isContentEditable) && !document.querySelector('.overlay')) return;
+  if (document.querySelector('.overlay')) return;
+  render();
+}
+function setSync(status, msg = ''){
+  syncState = { status, msg, at: status === 'idle' ? Date.now() : syncState.at };
+  const el = document.getElementById('syncBtn');
+  if (!el) return;
+  const t = syncState.at ? new Date(syncState.at).toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' }) : '';
+  const label = { off: '', locked: '🔒 ロック中', idle: '☁︎ 同期済み ' + t, dirty: '☁︎ 未送信', syncing: '☁︎ 同期中…', error: '⚠︎ 同期エラー' }[status];
+  el.hidden = status === 'off';
+  el.textContent = label;
+  el.className = 'sync-btn s-' + status;
+  el.title = msg || (status === 'idle' ? 'GitHubと同期済み。クリックで今すぐ同期' : status === 'locked' ? 'クリックしてパスワードを入力' : '');
+  if (view === 'settings' && document.getElementById('syncInfo')) document.getElementById('syncInfo').innerHTML = syncInfoHTML();
+}
+function syncInfoHTML(){
+  const s = syncState;
+  const map = { locked: '🔒 パスワード未入力のため同期を止めています', idle: '✓ 同期済み（' + (s.at ? new Date(s.at).toLocaleString('ja-JP') : '') + '）', dirty: '未送信の変更があります', syncing: '同期中…', error: '⚠︎ ' + esc(s.msg) };
+  return map[s.status] || '';
+}
+
+/* 起動時のロック解除 */
+function openUnlock(){
+  if (document.querySelector('.overlay.unlock')) return;
+  const ov = document.createElement('div'); ov.className = 'overlay unlock';
+  ov.innerHTML = `<div class="modal" style="max-width:440px">
+    <h2>同期のパスワード</h2>
+    <p class="hint">GitHubに保存した暗号化データを読むためのパスワードを入力してください。${syncState.msg ? '<br><span style="color:#a33">' + esc(syncState.msg) + '</span>' : ''}</p>
+    <form id="ulf">
+      <input id="ulp" type="password" autocomplete="current-password" style="width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff">
+      <label style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--sub);margin-top:10px"><input type="checkbox" id="ulr" checked> この端末にパスワードを記憶する</label>
+      <div class="msg" id="ulm"></div>
+      <div class="mfoot"><button type="button" class="btn ghost" id="ulc">あとで</button><button class="btn primary">同期する</button></div>
+    </form></div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('#ulp').focus();
+  ov.querySelector('#ulc').onclick = () => ov.remove();
+  ov.querySelector('#ulf').onsubmit = async e => {
+    e.preventDefault();
+    const pass = ov.querySelector('#ulp').value, msg = ov.querySelector('#ulm');
+    if (!pass) return;
+    msg.textContent = '確認中…（数秒かかります）';
+    try {
+      const { env } = await fetchRemote(syncCfg);
+      if (env) await decryptEnvelope(env, pass);
+      storePass(pass, ov.querySelector('#ulr').checked);
+      ov.remove();
+      syncNow(true);
+    } catch(err){ msg.textContent = err.message; msg.className = 'msg err'; }
+  };
+}
+function initSync(){
+  if (!syncCfg || !syncCfg.token){ setSync('off'); return; }
+  if (!syncPass){ setSync('locked'); openUnlock(); return; }
+  syncNow(false);
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && syncReady() && Date.now() - syncState.at > 20000) syncNow(false);
+});
+window.addEventListener('online', () => { if (syncReady()) syncNow(false); });
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+/* ---------- cover rendering ---------- */
+function colorFor(s){ let h=0; for(const c of String(s)) h=(h*31+c.charCodeAt(0))>>>0; return PALETTE[h%PALETTE.length]; }
+function placeholder(b){
+  return `<div class="ph" style="background:${colorFor(b.title)}"><div class="t">${esc(b.title)}</div><div class="a">${esc((b.authors||[]).join('、'))}</div></div>`;
+}
+function coverImg(src, alts, attrs){
+  return `<img src="${esc(src)}" alt="" ${attrs||''} data-alts="${esc((alts||[]).join('|'))}">`;
+}
+function coverHTML(b){
+  if (!b.cover) return placeholder(b);
+  return coverImg(b.cover, b.coverAlts, `loading="lazy" data-fallback="${b.id||''}" data-title="${esc(b.title)}"`);
+}
+// 画像が無い/読めないときは次の候補へ。全滅したらプレースホルダー
+function nextCover(img){
+  const alts = (img.dataset.alts || '').split('|').filter(Boolean);
+  if (alts.length){ img.dataset.alts = alts.slice(1).join('|'); img.src = alts[0]; return; }
+  if (img.dataset.done) return; img.dataset.done = '1';
+  const b = getBook(img.dataset.fallback) || { title: img.dataset.title || '', authors: [] };
+  const wrap = document.createElement('div'); wrap.innerHTML = placeholder(b);
+  img.replaceWith(wrap.firstChild);
+}
+document.addEventListener('error', e => { if (e.target.tagName === 'IMG' && 'alts' in e.target.dataset) nextCover(e.target); }, true);
+// Amazonは表紙が無いと1×1の透明画像を返すので、小さすぎる画像も「無し」とみなす
+document.addEventListener('load', e => {
+  const img = e.target;
+  if (img.tagName !== 'IMG' || !('alts' in img.dataset)) return;
+  if (img.naturalWidth < 20 || img.naturalHeight < 20) { nextCover(img); return; }
+  // 本棚の本なら、実際に表示できた画像を保存しておく
+  const b = getBook(img.dataset.fallback);
+  if (b && b.cover !== img.currentSrc && img.currentSrc && !img.currentSrc.startsWith('data:')){ b.cover = img.currentSrc; b.coverAlts = []; save(); }
+}, true);
+
+/* ---------- book search (Google Books + openBD) ---------- */
+const isIsbn = q => /^(97[89])?\d{9}[\dXx]$/.test(q.replace(/[-\s]/g,''));
+const httpsify = u => u ? u.replace(/^http:/,'https:').replace('&edge=curl','') : '';
+const ndlThumb = isbn => isbn ? `https://ndlsearch.ndl.go.jp/thumbnail/${isbn}.jpg` : '';
+// ISBN-13 (978…) → ISBN-10。書籍のAmazon ASINはISBN-10と同じ
+function toIsbn10(isbn){
+  const s = String(isbn||'').replace(/[-\s]/g,'').toUpperCase();
+  if (/^\d{9}[\dX]$/.test(s)) return s;
+  if (!/^978\d{10}$/.test(s)) return '';
+  const core = s.slice(3,12);
+  let sum = 0; for (let i=0;i<9;i++) sum += (10-i) * +core[i];
+  const c = (11 - sum % 11) % 11;
+  return core + (c===10 ? 'X' : String(c));
+}
+const amazonCover = isbn => { const a = toIsbn10(isbn); return a ? `https://images-na.ssl-images-amazon.com/images/P/${a}.09.LZZZZZZZ.jpg` : ''; };
+// 表紙候補を優先順に並べる：Amazon → Google Books → 国立国会図書館
+function coverCandidates(isbn, ...others){
+  return [...new Set([amazonCover(isbn), ...others, ndlThumb(isbn)].filter(Boolean))];
+}
+
+const KEY_API = 'reading-notes-gbooks-key';
+const getApiKey = () => { try { return localStorage.getItem(KEY_API) || ''; } catch(e){ return ''; } };
+async function searchGoogle(q){
+  const qs = isIsbn(q) ? 'isbn:' + q.replace(/[-\s]/g,'') : q;
+  const key = getApiKey();
+  const url = 'https://www.googleapis.com/books/v1/volumes?maxResults=15&printType=books&q=' + encodeURIComponent(qs) + (key ? '&key=' + encodeURIComponent(key) : '');
+  const res = await fetch(url);
+  if (!res.ok){ const e = new Error('Google Books: ' + res.status); e.status = res.status; throw e; }
+  const data = await res.json();
+  return (data.items||[]).map(it => {
+    const v = it.volumeInfo || {};
+    const ids = v.industryIdentifiers || [];
+    const isbn = (ids.find(i=>i.type==='ISBN_13') || ids.find(i=>i.type==='ISBN_10') || {}).identifier || '';
+    const img = v.imageLinks || {};
+    const g = httpsify(img.thumbnail || img.smallThumbnail || '');
+    const covers = coverCandidates(isbn, g);
+    return {
+      title: v.title + (v.subtitle ? ' ' + v.subtitle : ''),
+      authors: v.authors || [],
+      publisher: v.publisher || '',
+      publishedDate: v.publishedDate || '',
+      isbn, description: v.description || '',
+      cover: covers[0] || '', coverAlts: covers.slice(1)
+    };
+  });
+}
+async function searchOpenBD(isbn){
+  const res = await fetch('https://api.openbd.jp/v1/get?isbn=' + isbn);
+  if (!res.ok) return [];
+  const data = await res.json();
+  return (data||[]).filter(Boolean).map(d => {
+    const s = d.summary || {};
+    const covers = coverCandidates(s.isbn || isbn, s.cover);
+    return {
+      title: s.title || '', authors: s.author ? s.author.split(/[,，、／/]\s*/).map(a=>a.replace(/／著$|\/著$|著$/,'').trim()).filter(Boolean) : [],
+      publisher: s.publisher || '', publishedDate: s.pubdate || '', isbn: s.isbn || isbn,
+      description: '', cover: covers[0] || '', coverAlts: covers.slice(1)
+    };
+  });
+}
+// Open Library（キー不要・CORS対応）。日本の本は少なめだが予備として使う
+async function searchOpenLibrary(q){
+  const clean = q.replace(/[-\s]/g,'');
+  const fields = 'title,subtitle,author_name,isbn,publisher,first_publish_year,cover_i';
+  const url = 'https://openlibrary.org/search.json?limit=15&fields=' + fields + '&' + (isIsbn(clean) ? 'isbn=' + clean : 'q=' + encodeURIComponent(q));
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Open Library: ' + res.status);
+  const data = await res.json();
+  return (data.docs||[]).map(d => {
+    const isbns = d.isbn || [];
+    const isbn = (isIsbn(clean) && isbns.includes(clean)) ? clean : (isbns.find(i => /^978/.test(i)) || isbns[0] || '');
+    const ol = d.cover_i ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg` : '';
+    const covers = coverCandidates(isbn, ol);
+    return {
+      title: d.title + (d.subtitle ? ' ' + d.subtitle : ''), authors: d.author_name || [],
+      publisher: (d.publisher||[])[0] || '', publishedDate: d.first_publish_year ? String(d.first_publish_year) : '',
+      isbn, description: '', cover: covers[0] || '', coverAlts: covers.slice(1)
+    };
+  });
+}
+let lastSource = '';
+async function searchBooks(q){
+  const clean = q.replace(/[-\s]/g,'');
+  let results = [], err = null;
+  const tries = isIsbn(clean)
+    ? [['openBD', () => searchOpenBD(clean)], ['Google Books', () => searchGoogle(q)], ['Open Library', () => searchOpenLibrary(q)]]
+    : [['Google Books', () => searchGoogle(q)], ['Open Library', () => searchOpenLibrary(q)]];
+  for (const [name, fn] of tries){
+    try { results = await fn(); } catch(e){ if (!err || e.status === 429) err = e; results = []; }
+    if (results.length){ lastSource = name; return results; }
+  }
+  if (err) throw err;
+  return results;
+}
+
+/* ---------- add modal ---------- */
+function openAdd(){
+  const ov = document.createElement('div');
+  ov.className = 'overlay';
+  ov.innerHTML = `
+    <div class="modal" role="dialog" aria-label="本を追加">
+      <h2>本を追加</h2>
+      <p class="hint">タイトル・著者名・ISBNで検索すると、表紙と著者名を自動で取り込みます。</p>
+      <form class="srow" id="sform">
+        <input id="sq" placeholder="例：嫌われる勇気 / 9784478025819" autocomplete="off">
+        <button class="btn primary" type="submit">検索</button>
+      </form>
+      <div class="results" id="results"></div>
+      <details id="manualBox" style="margin-top:14px">
+        <summary style="cursor:pointer;color:var(--sub);font-size:13px">見つからないときは手入力</summary>
+        <form class="manual" id="mform">
+          <input class="full" name="title" placeholder="タイトル（必須）" required>
+          <input name="authors" placeholder="著者（複数は「、」区切り）">
+          <input name="publisher" placeholder="出版社">
+          <button class="btn full" type="submit">この内容で追加</button>
+        </form>
+      </details>
+      <div class="mfoot"><span></span><button class="btn ghost" id="closeM">閉じる</button></div>
+    </div>`;
+  document.body.appendChild(ov);
+  const close = () => ov.remove();
+  ov.addEventListener('click', e => { if (e.target === ov) close(); });
+  ov.querySelector('#closeM').onclick = close;
+  document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ close(); document.removeEventListener('keydown', esc);} });
+  const input = ov.querySelector('#sq'); input.focus();
+  const out = ov.querySelector('#results');
+  let found = [];
+
+  ov.querySelector('#sform').onsubmit = async e => {
+    e.preventDefault();
+    const q = input.value.trim(); if (!q) return;
+    out.innerHTML = '<div class="msg">検索中…</div>';
+    try {
+      found = await searchBooks(q);
+      if (!found.length){ out.innerHTML = '<div class="msg">見つかりませんでした。キーワードを変えるか、下の「手入力」から追加してください。</div>'; ov.querySelector('#manualBox').open = true; ov.querySelector('[name=title]').value = isIsbn(q)?'':q; return; }
+      out.innerHTML = found.map((r,i) => `
+        <button class="res" data-i="${i}">
+          <div class="mini">${r.cover ? coverImg(r.cover, r.coverAlts, `data-title="${esc(r.title)}"`) : placeholder(r)}</div>
+          <div><b>${esc(r.title)}</b><small>${esc(r.authors.join('、') || '著者不明')}${r.publisher?' ／ '+esc(r.publisher):''}${r.publishedDate?' ／ '+esc(r.publishedDate.slice(0,4)):''}</small></div>
+        </button>`).join('');
+    } catch(err){
+      out.innerHTML = err.status === 429
+        ? `<div class="msg err">Google Books の利用回数の上限に達しているため検索できませんでした。<br><b>「設定」タブで自分のGoogle APIキーを登録すると解決します</b>（無料）。今すぐ追加したい場合は、下の手入力をお使いください。</div>`
+        : `<div class="msg err">検索できませんでした（${esc(err.message)}）。インターネット接続を確認するか、少し時間をおいて再度お試しください。手入力でも追加できます。</div>`;
+      ov.querySelector('#manualBox').open = true;
+    }
+  };
+  out.addEventListener('click', e => {
+    const btn = e.target.closest('.res'); if (!btn) return;
+    const r = found[+btn.dataset.i];
+    // if the shown image failed but alt worked, keep the working one
+    // 検索結果で表示できている画像を優先。まだ読み込み中なら残りの候補も持っていく
+    const img = btn.querySelector('img');
+    if (img && img.complete && img.naturalWidth >= 20) addBook({ ...r, cover: img.currentSrc, coverAlts: [] });
+    else if (img) addBook({ ...r, cover: img.getAttribute('src'), coverAlts: (img.dataset.alts||'').split('|').filter(Boolean) });
+    else addBook({ ...r, cover: '', coverAlts: [] });
+    close();
+  });
+  ov.querySelector('#mform').onsubmit = e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    addBook({ title: f.get('title').trim(), authors: String(f.get('authors')||'').split(/[、,，]/).map(s=>s.trim()).filter(Boolean), publisher: f.get('publisher').trim(), cover:'' });
+    close();
+  };
+}
+
+function addBook(r){
+  const dup = r.isbn && books.find(b => b.isbn && b.isbn === r.isbn);
+  if (dup){ toast('この本はすでに本棚にあります'); go('detail', dup.id); return; }
+  const b = {
+    id: uid(), title: r.title, authors: r.authors||[], publisher: r.publisher||'', publishedDate: r.publishedDate||'',
+    isbn: r.isbn||'', description: r.description||'', cover: r.cover||'', coverAlts: r.coverAlts||[],
+    status: 'reading', startDate: today(), endDate: '', rating: 0,
+    notes: [], actions: [], createdAt: Date.now(), updatedAt: Date.now()
+  };
+  books.unshift(b); save();
+  toast('本棚に追加しました');
+  go('detail', b.id);
+}
+
+/* ---------- navigation ---------- */
+function go(v, id){
+  view = v; if (id !== undefined) currentId = id;
+  try { history.replaceState(null, '', v==='detail' ? '#book-'+currentId : '#'+v); } catch(e){}
+  render(); window.scrollTo(0,0);
+}
+document.getElementById('nav').onclick = e => { const b = e.target.closest('button'); if (b) go(b.dataset.v); };
+document.getElementById('addBtn').onclick = openAdd;
+
+/* ---------- views ---------- */
+const app = document.getElementById('app');
+function render(){
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === (view==='detail'?'shelf':view)));
+  if (view === 'detail' && getBook(currentId)) return renderDetail();
+  if (view === 'actions') return renderActions();
+  if (view === 'calendar') return renderCalendar();
+  if (view === 'settings') return renderSettings();
+  view = 'shelf'; renderShelf();
+}
+
+function renderShelf(){
+  const year = new Date().getFullYear();
+  const doneYear = books.filter(b => b.status==='done' && (b.endDate||'').startsWith(String(year))).length;
+  const openActs = books.reduce((n,b)=>n+b.actions.filter(a=>!a.done).length,0);
+  const notes = books.reduce((n,b)=>n+b.notes.length,0);
+  const q = query.toLowerCase();
+  const list = books
+    .filter(b => filter==='all' || b.status===filter)
+    .filter(b => !q || (b.title + (b.authors||[]).join('') + b.notes.map(n=>n.text).join('')).toLowerCase().includes(q))
+    .sort((a,b) => (b.endDate||b.startDate||'').localeCompare(a.endDate||a.startDate||'') || b.createdAt - a.createdAt);
+
+  if (!books.length){
+    app.innerHTML = `<div class="empty"><h2 class="serif">本棚はまだ空っぽです</h2><p>「＋ 本を追加」から、最初の一冊を登録しましょう。<br>タイトルやISBNで検索すると、表紙と著者名が自動で入ります。</p><button class="btn primary" onclick="document.getElementById('addBtn').click()">＋ 本を追加</button></div>`;
+    return;
+  }
+  app.innerHTML = `
+    <div class="stats">
+      <div class="stat"><b>${books.length}</b><small>登録した本</small></div>
+      <div class="stat"><b>${doneYear}</b><small>${year}年に読了</small></div>
+      <div class="stat"><b>${notes}</b><small>学び・気付き</small></div>
+      <div class="stat"><b>${openActs}</b><small>未完了の行動メモ</small></div>
+    </div>
+    <div class="filters">
+      ${[['all','すべて'],['reading','読書中'],['done','読了'],['want','読みたい']].map(([k,l])=>`<button class="chip ${filter===k?'on':''}" data-f="${k}">${l}</button>`).join('')}
+      <input class="search" id="q" placeholder="タイトル・著者・メモを検索" value="${esc(query)}">
+    </div>
+    ${list.length ? `<div class="grid">${list.map(b => `
+      <button class="card" data-id="${b.id}">
+        <div class="cover">${coverHTML(b)}</div>
+        <div><span class="badge b-${b.status}">${STATUS[b.status]}</span></div>
+        <div class="ttl">${esc(b.title)}</div>
+        <div class="meta">${esc((b.authors||[]).join('、'))}</div>
+        <div class="counts"><span>📝 ${b.notes.length}</span><span>✅ ${b.actions.filter(a=>a.done).length}/${b.actions.length}</span>${b.endDate?`<span>${fmtDate(b.endDate)}</span>`:''}</div>
+      </button>`).join('')}</div>` : `<div class="empty">該当する本がありません</div>`}`;
+  app.querySelectorAll('.chip').forEach(c => c.onclick = () => { filter = c.dataset.f; renderShelf(); });
+  const qi = app.querySelector('#q');
+  qi.oninput = () => { query = qi.value; const pos = qi.selectionStart; renderShelf(); const n = app.querySelector('#q'); n.focus(); n.setSelectionRange(pos,pos); };
+  app.querySelectorAll('.card').forEach(c => c.onclick = () => go('detail', c.dataset.id));
+}
+
+function renderDetail(){
+  const b = getBook(currentId);
+  const openN = b.actions.filter(a=>!a.done).length;
+  app.innerHTML = `
+    <button class="btn ghost back" id="back">← 本棚へ</button>
+    <div class="detail">
+      <div>
+        <div class="cover" id="cv" title="クリックで表紙画像を変更">${coverHTML(b)}</div>
+        <div class="cover-tools">
+          ${toIsbn10(b.isbn)?'<button class="btn sm" id="cvAmz">Amazonから取得</button>':''}
+          <button class="btn sm" id="cvUrl">URLで設定</button>
+          <button class="btn sm" id="cvUp">画像ファイル</button>
+          ${b.cover?'<button class="btn sm ghost" id="cvDel">削除</button>':''}
+        </div>
+      </div>
+      <div>
+        <h2 class="dt-title" id="ttl" title="クリックで編集">${esc(b.title)}</h2>
+        <div class="dt-sub">${esc((b.authors||[]).join('、') || '著者未設定')}${b.publisher?' ／ '+esc(b.publisher):''}${b.publishedDate?' ／ '+esc(b.publishedDate):''}${b.isbn?' ／ ISBN '+esc(b.isbn):''}
+          <button class="icon" id="editMeta" title="書誌情報を編集">✎</button></div>
+
+        <div class="fields">
+          <label>ステータス
+            <select id="st">${Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${b.status===k?'selected':''}>${v}</option>`).join('')}</select>
+          </label>
+          <label>読み始めた日<input type="date" id="sd" value="${esc(b.startDate)}"></label>
+          <label>読み終えた日<input type="date" id="ed" value="${esc(b.endDate)}"></label>
+          <label style="grid-column:1/-1">評価
+            <div class="stars" id="stars">${[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${b.rating>=n?'on':''}" aria-label="${n}つ星">★</button>`).join('')}</div>
+          </label>
+        </div>
+
+        <div class="section">
+          <h3>学び・気付き <span class="n">${b.notes.length}件</span></h3>
+          <p class="hint">印象に残った言葉、得られた視点、自分の考えの変化など。（Ctrl / ⌘ + Enter で追加）</p>
+          <div class="adder"><textarea id="noteIn" rows="2" placeholder="この本から得た学び・気付きを書く"></textarea><button class="btn primary" id="noteAdd">追加</button></div>
+          <ul class="items">${b.notes.map(n=>`
+            <li class="item note" data-id="${n.id}">
+              <div style="flex:1"><div class="txt">${esc(n.text)}</div><div class="when">${new Date(n.createdAt).toLocaleDateString('ja-JP')}</div></div>
+              <div class="ops"><button class="icon" data-act="edit" title="編集">✎</button><button class="icon" data-act="del" title="削除">✕</button></div>
+            </li>`).join('')}</ul>
+        </div>
+
+        <div class="section">
+          <h3>行動メモ <span class="n">未完了 ${openN} ／ 全 ${b.actions.length}件</span></h3>
+          <p class="hint">読んだ内容を行動に移すための、具体的な次の一歩。</p>
+          <div class="adder"><textarea id="actIn" rows="1" placeholder="例：明日の朝会で〇〇を試してみる"></textarea><button class="btn primary" id="actAdd">追加</button></div>
+          <ul class="items">${b.actions.map(a=>`
+            <li class="item ${a.done?'done':''}" data-id="${a.id}">
+              <button class="check ${a.done?'on':''}" data-act="toggle" aria-label="完了">${a.done?'✓':''}</button>
+              <div style="flex:1"><div class="txt">${esc(a.text)}</div>${a.done&&a.doneAt?`<div class="when">${new Date(a.doneAt).toLocaleDateString('ja-JP')} 完了</div>`:''}</div>
+              <div class="ops"><button class="icon" data-act="edit" title="編集">✎</button><button class="icon" data-act="del" title="削除">✕</button></div>
+            </li>`).join('')}</ul>
+        </div>
+
+        ${b.description?`<div class="section"><h3>内容紹介</h3><div class="desc">${esc(b.description)}</div></div>`:''}
+        <div style="margin-top:30px"><button class="btn danger sm" id="delBook">この本を削除</button></div>
+      </div>
+    </div>`;
+
+  const $ = s => app.querySelector(s);
+  $('#back').onclick = () => go('shelf');
+  $('#st').onchange = e => {
+    b.status = e.target.value;
+    if (b.status==='done' && !b.endDate) b.endDate = today();
+    if (b.status==='reading' && !b.startDate) b.startDate = today();
+    touch(b); renderDetail();
+  };
+  $('#sd').onchange = e => { b.startDate = e.target.value; touch(b); };
+  $('#ed').onchange = e => { b.endDate = e.target.value; if (b.endDate && b.status!=='done'){ b.status='done'; touch(b); renderDetail(); } else touch(b); };
+  $('#stars').onclick = e => { const n = +e.target.dataset.n; if(!n) return; b.rating = b.rating===n ? 0 : n; touch(b); renderDetail(); };
+
+  const addNote = () => { const v = $('#noteIn').value.trim(); if(!v) return; b.notes.unshift({id:uid(), text:v, createdAt:Date.now()}); touch(b); renderDetail(); app.querySelector('#noteIn').focus(); };
+  const addAct = () => { const v = $('#actIn').value.trim(); if(!v) return; b.actions.push({id:uid(), text:v, done:false, createdAt:Date.now()}); touch(b); renderDetail(); app.querySelector('#actIn').focus(); };
+  $('#noteAdd').onclick = addNote; $('#actAdd').onclick = addAct;
+  $('#noteIn').onkeydown = e => { if (e.key==='Enter' && (e.metaKey||e.ctrlKey)){ e.preventDefault(); addNote(); } };
+  $('#actIn').onkeydown = e => { if (e.key==='Enter' && !e.shiftKey && !e.isComposing){ e.preventDefault(); addAct(); } };
+
+  app.querySelectorAll('.section .items').forEach((ul, idx) => {
+    const arr = idx===0 ? b.notes : b.actions;
+    ul.onclick = e => {
+      const btn = e.target.closest('[data-act]'); if (!btn) return;
+      const li = btn.closest('.item'); const it = arr.find(x=>x.id===li.dataset.id);
+      if (btn.dataset.act==='del'){ arr.splice(arr.indexOf(it),1); touch(b); renderDetail(); }
+      if (btn.dataset.act==='toggle'){ it.done = !it.done; it.doneAt = it.done ? Date.now() : null; touch(b); renderDetail(); }
+      if (btn.dataset.act==='edit') inlineEdit(li.querySelector('.txt'), v => { if(v){ it.text=v; touch(b);} renderDetail(); });
+    };
+  });
+
+  $('#ttl').onclick = () => inlineEdit($('#ttl'), v => { if(v){ b.title=v; touch(b);} renderDetail(); }, true);
+  $('#editMeta').onclick = () => editMeta(b);
+  const pickCover = () => { coverTarget = b.id; document.getElementById('coverInput').click(); };
+  $('#cv').onclick = pickCover; $('#cvUp').onclick = pickCover;
+  if ($('#cvDel')) $('#cvDel').onclick = () => { b.cover=''; b.coverAlts=[]; touch(b); renderDetail(); };
+  if ($('#cvAmz')) $('#cvAmz').onclick = () => {
+    const url = amazonCover(b.isbn);
+    testImage(url).then(ok => {
+      if (ok){ b.cover = url; b.coverAlts = []; touch(b); renderDetail(); toast('Amazonの表紙を設定しました'); }
+      else toast('Amazonにこの本の表紙が見つかりませんでした');
+    });
+  };
+  $('#cvUrl').onclick = () => coverUrlBox(b);
+  $('#delBook').onclick = () => confirmBox(`「${b.title}」を削除します。学び・気付きと行動メモも消えます。よろしいですか？`, () => { markDeleted(b.id); books = books.filter(x=>x!==b); save(); toast('削除しました'); go('shelf'); });
+}
+
+function inlineEdit(el, done, single){
+  el.contentEditable = 'true'; el.focus();
+  const r = document.createRange(); r.selectNodeContents(el); r.collapse(false);
+  const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  let finished = false;
+  const finish = () => { if (finished) return; finished = true; el.contentEditable='false'; done(el.innerText.trim()); };
+  el.onblur = finish;
+  el.onkeydown = e => {
+    if (e.key==='Escape'){ finished = true; el.contentEditable='false'; renderDetail(); }
+    if (e.key==='Enter' && (single || e.metaKey || e.ctrlKey) && !e.isComposing){ e.preventDefault(); el.blur(); }
+  };
+}
+
+function editMeta(b){
+  const ov = document.createElement('div'); ov.className='overlay';
+  ov.innerHTML = `<div class="modal"><h2>書誌情報を編集</h2>
+    <form class="manual" id="ef">
+      <input class="full" name="title" value="${esc(b.title)}" placeholder="タイトル" required>
+      <input name="authors" value="${esc((b.authors||[]).join('、'))}" placeholder="著者（「、」区切り）">
+      <input name="publisher" value="${esc(b.publisher)}" placeholder="出版社">
+      <input name="publishedDate" value="${esc(b.publishedDate)}" placeholder="出版日">
+      <input name="isbn" value="${esc(b.isbn)}" placeholder="ISBN">
+      <div class="mfoot full"><span></span><span><button type="button" class="btn ghost" id="cx">キャンセル</button> <button class="btn primary">保存</button></span></div>
+    </form></div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click', e => { if (e.target===ov) ov.remove(); });
+  ov.querySelector('#cx').onclick = () => ov.remove();
+  ov.querySelector('#ef').onsubmit = e => {
+    e.preventDefault(); const f = new FormData(e.target);
+    b.title = f.get('title').trim() || b.title;
+    b.authors = String(f.get('authors')).split(/[、,，]/).map(s=>s.trim()).filter(Boolean);
+    b.publisher = f.get('publisher').trim(); b.publishedDate = f.get('publishedDate').trim(); b.isbn = f.get('isbn').trim();
+    touch(b); ov.remove(); renderDetail();
+  };
+}
+
+function testImage(url){
+  return new Promise(res => {
+    if (!url) return res(false);
+    const im = new Image();
+    im.onload = () => res(im.naturalWidth >= 20 && im.naturalHeight >= 20);
+    im.onerror = () => res(false);
+    im.src = url;
+  });
+}
+function coverUrlBox(b){
+  const ov = document.createElement('div'); ov.className='overlay';
+  ov.innerHTML = `<div class="modal"><h2>画像URLで表紙を設定</h2>
+    <p class="hint">Amazonなどの商品ページで表紙画像を右クリック →「画像アドレスをコピー」して貼り付けてください。</p>
+    <form id="uf" class="srow"><input id="uin" placeholder="https://m.media-amazon.com/images/I/….jpg" autocomplete="off"><button class="btn primary">設定</button></form>
+    <div class="msg" id="umsg"></div>
+    <div class="mfoot"><span></span><button class="btn ghost" id="cx">閉じる</button></div></div>`;
+  document.body.appendChild(ov);
+  ov.addEventListener('click', e => { if (e.target===ov) ov.remove(); });
+  ov.querySelector('#cx').onclick = () => ov.remove();
+  ov.querySelector('#uin').focus();
+  ov.querySelector('#uf').onsubmit = async e => {
+    e.preventDefault();
+    const url = ov.querySelector('#uin').value.trim();
+    const msg = ov.querySelector('#umsg');
+    if (!/^https?:\/\//.test(url)){ msg.textContent = 'http:// または https:// で始まるURLを入力してください'; return; }
+    msg.textContent = '確認中…';
+    if (await testImage(url)){ b.cover = url; b.coverAlts = []; touch(b); ov.remove(); renderDetail(); toast('表紙を設定しました'); }
+    else msg.textContent = 'この URL の画像を読み込めませんでした。画像そのもののURL（.jpg など）か確認してください。なお安全のため、使えるのは Amazon・Google・国立国会図書館・openBD・Open Library の画像だけです。それ以外は画像を保存して「画像ファイル」から設定してください';
+  };
+}
+
+function confirmBox(msg, ok, okLabel){
+  const ov = document.createElement('div'); ov.className='overlay';
+  ov.innerHTML = `<div class="modal" style="max-width:420px"><p style="margin:0 0 18px">${esc(msg)}</p><div class="mfoot"><span></span><span><button class="btn ghost" id="n">キャンセル</button> <button class="btn danger" id="y">${esc(okLabel || '削除する')}</button></span></div></div>`;
+  document.body.appendChild(ov);
+  ov.querySelector('#n').onclick = () => ov.remove();
+  ov.querySelector('#y').onclick = () => { ov.remove(); ok(); };
+}
+
+/* ---------- calendar ---------- */
+let calY = new Date().getFullYear(), calM = new Date().getMonth(); // calM: 0-11
+let calMode = 'end'; // end = 読み終えた日 / start = 読み始めた日
+const pad = n => String(n).padStart(2,'0');
+const ymd = (y,m,d) => `${y}-${pad(m+1)}-${pad(d)}`;
+
+/* 日本の祝日（祝日法に基づく計算。2000〜2099年に対応） */
+const holidayCache = {};
+function jpHolidays(y){
+  if (holidayCache[y]) return holidayCache[y];
+  const h = {};
+  const add = (m, d, name) => { h[ymd(y, m-1, d)] = name; };
+  const nthMonday = (m, n) => { const f = new Date(y, m-1, 1).getDay(); return 1 + ((8 - f) % 7) + (n-1)*7; };
+  const k = y - 1980;
+  const shunbun = Math.floor(20.8431 + 0.242194*k - Math.floor(k/4));
+  const shubun  = Math.floor(23.2488 + 0.242194*k - Math.floor(k/4));
+
+  add(1, 1, '元日');
+  add(1, nthMonday(1, 2), '成人の日');
+  add(2, 11, '建国記念の日');
+  if (y >= 2020) add(2, 23, '天皇誕生日');
+  add(3, shunbun, '春分の日');
+  add(4, 29, y >= 2007 ? '昭和の日' : 'みどりの日');
+  add(5, 3, '憲法記念日');
+  if (y >= 2007) add(5, 4, 'みどりの日');
+  add(5, 5, 'こどもの日');
+  if (y === 2020) add(7, 23, '海の日'); else if (y === 2021) add(7, 22, '海の日'); else add(7, nthMonday(7, 3), '海の日');
+  if (y === 2020) add(8, 10, '山の日'); else if (y === 2021) add(8, 8, '山の日'); else if (y >= 2016) add(8, 11, '山の日');
+  add(9, nthMonday(9, 3), '敬老の日');
+  add(9, shubun, '秋分の日');
+  if (y === 2020) add(7, 24, 'スポーツの日'); else if (y === 2021) add(7, 23, 'スポーツの日');
+  else add(10, nthMonday(10, 2), y >= 2020 ? 'スポーツの日' : '体育の日');
+  add(11, 3, '文化の日');
+  add(11, 23, '勤労感謝の日');
+  if (y <= 2018) add(12, 23, '天皇誕生日');
+  if (y === 2019){ add(4, 30, '国民の休日'); add(5, 1, '天皇の即位の日'); add(5, 2, '国民の休日'); add(10, 22, '即位礼正殿の儀の行われる日'); }
+
+  // 国民の休日：祝日に挟まれた平日
+  Object.keys(h).forEach(key => {
+    const d = new Date(key + 'T00:00:00'); d.setDate(d.getDate() + 2);
+    const after = ymd(d.getFullYear(), d.getMonth(), d.getDate());
+    d.setDate(d.getDate() - 1);
+    const mid = ymd(d.getFullYear(), d.getMonth(), d.getDate());
+    if (h[after] && !h[mid] && d.getDay() !== 0) h[mid] = '国民の休日';
+  });
+  // 振替休日：日曜の祝日の後、最初の祝日でない日
+  Object.keys(h).sort().forEach(key => {
+    const d = new Date(key + 'T00:00:00');
+    if (d.getDay() !== 0) return;
+    do { d.setDate(d.getDate() + 1); } while (h[ymd(d.getFullYear(), d.getMonth(), d.getDate())]);
+    if (d.getFullYear() === y) h[ymd(y, d.getMonth(), d.getDate())] = '振替休日';
+  });
+  return (holidayCache[y] = h);
+}
+
+function renderCalendar(){
+  const field = calMode === 'end' ? 'endDate' : 'startDate';
+  const prefix = `${calY}-${pad(calM+1)}`;
+  const byDay = {};
+  books.forEach(b => { const d = b[field]; if (d && d.startsWith(prefix)) (byDay[d] ||= []).push(b); });
+  const monthBooks = Object.keys(byDay).sort().flatMap(d => byDay[d].map(b => ({ d, b })));
+  const yearCounts = Array.from({length:12}, (_,m) => books.filter(b => (b[field]||'').startsWith(`${calY}-${pad(m+1)}`)).length);
+  const maxCount = Math.max(1, ...yearCounts);
+
+  const first = new Date(calY, calM, 1).getDay();       // 0=日曜
+  const days = new Date(calY, calM+1, 0).getDate();
+  const t = today();
+  const holidays = jpHolidays(calY);
+  const cells = [];
+  for (let i=0;i<first;i++) cells.push('<div class="cal-cell out"></div>');
+  for (let d=1; d<=days; d++){
+    const key = ymd(calY, calM, d), list = byDay[key] || [], dow = (first + d - 1) % 7;
+    const shown = list.slice(0, 3), more = list.length - shown.length;
+    const hol = holidays[key];
+    cells.push(`
+      <div class="cal-cell ${key===t?'today':''} ${list.length?'has':''}" ${hol?`title="${esc(hol)}"`:''}>
+        <div class="cal-d ${dow===0||hol?'sun':dow===6?'sat':''}">${d}${hol?`<span class="cal-hol">${esc(hol)}</span>`:''}</div>
+        <div class="cal-books n${Math.min(list.length,3)}">
+          ${shown.map(b => `<button class="cal-cover" data-id="${b.id}" title="${esc(b.title)}">${coverHTML(b)}</button>`).join('')}
+          ${more>0?`<span class="cal-more">+${more}</span>`:''}
+        </div>
+      </div>`);
+  }
+  while (cells.length % 7) cells.push('<div class="cal-cell out"></div>');
+
+  app.innerHTML = `
+    <div class="cal-head">
+      <div class="cal-nav">
+        <button class="btn sm" id="prev" aria-label="前の月">‹</button>
+        <h2 class="serif">${calY}年 ${calM+1}月</h2>
+        <button class="btn sm" id="next" aria-label="次の月">›</button>
+        <button class="btn sm ghost" id="thisM">今月</button>
+      </div>
+      <div class="cal-mode">
+        <button class="chip ${calMode==='end'?'on':''}" data-m="end">読み終えた日</button>
+        <button class="chip ${calMode==='start'?'on':''}" data-m="start">読み始めた日</button>
+      </div>
+    </div>
+
+    <div class="cal-year" aria-label="${calY}年の月別冊数">
+      ${yearCounts.map((c,m) => `<button class="cy ${m===calM?'on':''}" data-m="${m}" title="${m+1}月：${c}冊">
+        <span class="cy-bar"><i style="height:${c? Math.max(12, c/maxCount*100):0}%"></i></span>
+        <span class="cy-n">${c||''}</span><span class="cy-l">${m+1}月</span></button>`).join('')}
+    </div>
+
+    <div class="cal">
+      ${['日','月','火','水','木','金','土'].map((w,i)=>`<div class="cal-w ${i===0?'sun':i===6?'sat':''}">${w}</div>`).join('')}
+      ${cells.join('')}
+    </div>
+
+    <div class="cal-list">
+      <h3 class="serif">${calM+1}月に${calMode==='end'?'読み終えた':'読み始めた'}本 <span class="n">${monthBooks.length}冊</span></h3>
+      ${monthBooks.length ? `<ul class="items">${monthBooks.map(({d,b}) => `
+        <li class="item cal-row" data-id="${b.id}">
+          <div class="mini">${coverHTML(b)}</div>
+          <div style="flex:1;min-width:0">
+            <b>${esc(b.title)}</b>
+            <div class="when">${esc((b.authors||[]).join('、'))}</div>
+            <div class="when">${b.startDate?fmtDate(b.startDate):'?'} 〜 ${b.endDate?fmtDate(b.endDate):'読書中'}　📝 ${b.notes.length}　✅ ${b.actions.filter(a=>a.done).length}/${b.actions.length}</div>
+          </div>
+          <span class="badge b-${b.status}">${STATUS[b.status]}</span>
+        </li>`).join('')}</ul>`
+      : `<p class="hint">この月に${calMode==='end'?'読み終えた':'読み始めた'}本はありません。本の詳細画面で日付を入れると、ここに表示されます。</p>`}
+    </div>`;
+
+  const move = dm => { const d = new Date(calY, calM + dm, 1); calY = d.getFullYear(); calM = d.getMonth(); renderCalendar(); };
+  app.querySelector('#prev').onclick = () => move(-1);
+  app.querySelector('#next').onclick = () => move(1);
+  app.querySelector('#thisM').onclick = () => { const n = new Date(); calY = n.getFullYear(); calM = n.getMonth(); renderCalendar(); };
+  app.querySelectorAll('.cal-mode .chip').forEach(c => c.onclick = () => { calMode = c.dataset.m; renderCalendar(); });
+  app.querySelectorAll('.cy').forEach(c => c.onclick = () => { calM = +c.dataset.m; renderCalendar(); });
+  app.querySelectorAll('.cal-cover, .cal-row').forEach(el => el.onclick = () => go('detail', el.dataset.id));
+}
+
+function renderActions(){
+  const groups = books.map(b => ({ b, acts: b.actions.filter(a => showDoneActions || !a.done) })).filter(g => g.acts.length);
+  const total = books.reduce((n,b)=>n+b.actions.filter(a=>!a.done).length,0);
+  app.innerHTML = `
+    <div class="filters">
+      <h2 class="serif" style="margin:0;font-size:22px">行動メモ</h2>
+      <span style="color:var(--sub);font-size:13px">未完了 ${total}件</span>
+      <label style="margin-left:auto;font-size:13px;color:var(--sub);display:flex;gap:6px;align-items:center"><input type="checkbox" id="sd" ${showDoneActions?'checked':''}> 完了済みも表示</label>
+    </div>
+    ${groups.length ? groups.map(({b,acts}) => `
+      <div class="act-group">
+        <div class="act-book" data-id="${b.id}"><div class="mini">${coverHTML(b)}</div><b>${esc(b.title)}</b></div>
+        <ul class="items">${acts.map(a=>`
+          <li class="item ${a.done?'done':''}" data-book="${b.id}" data-id="${a.id}">
+            <button class="check ${a.done?'on':''}" aria-label="完了">${a.done?'✓':''}</button>
+            <div class="txt">${esc(a.text)}</div>
+          </li>`).join('')}</ul>
+      </div>`).join('') : `<div class="empty"><h2 class="serif">${total===0 && books.some(b=>b.actions.length) ? 'すべて完了しました 🎉' : '行動メモはまだありません'}</h2><p>本の詳細ページで「行動メモ」を追加すると、ここにまとめて表示されます。</p></div>`}`;
+  app.querySelector('#sd').onchange = e => { showDoneActions = e.target.checked; renderActions(); };
+  app.querySelectorAll('.act-book').forEach(el => el.onclick = () => go('detail', el.dataset.id));
+  app.querySelectorAll('.check').forEach(c => c.onclick = () => {
+    const li = c.closest('.item'); const b = getBook(li.dataset.book); const a = b.actions.find(x=>x.id===li.dataset.id);
+    a.done = !a.done; a.doneAt = a.done ? Date.now() : null; touch(b);
+    if (a.done) toast('おつかれさまです！');
+    renderActions();
+  });
+}
+
+/* ---------- 設定：GitHub同期 ---------- */
+function syncPanelHTML(){
+  const howto = `
+    <details style="margin-top:10px"><summary style="cursor:pointer;font-size:13px;color:var(--sub)">はじめての準備（GitHubでの操作・10分ほど）</summary>
+      <ol class="steps">
+        <li><b>2段階認証をオンにする</b>：GitHub右上のアイコン →「Settings」→「Password and authentication」→「Enable two-factor authentication」</li>
+        <li><b>データ用のプライベートリポジトリを作る</b>：右上「＋」→「New repository」→ 名前 <code>reading-notes-data</code>、<b>Private</b> を選択 →「Add a README file」にチェック →「Create repository」</li>
+        <li><b>トークンを作る</b>：右上のアイコン →「Settings」→ 左メニュー最下部「Developer settings」→「Personal access tokens」→「<b>Fine-grained tokens</b>」→「Generate new token」
+          <ul style="margin:4px 0;padding-left:18px">
+            <li>Token name：<code>reading-notes</code>　Expiration：1年など</li>
+            <li>Repository access：「<b>Only select repositories</b>」→ <code>reading-notes-data</code> だけを選ぶ</li>
+            <li>Permissions →「Repository permissions」→「<b>Contents</b>」を「<b>Read and write</b>」に（他は変更しない）</li>
+          </ul>
+          「Generate token」を押し、表示された <code>github_pat_</code> で始まる文字列をコピー（この画面を閉じると二度と表示されません）</li>
+        <li><b>この画面で接続</b>：ユーザー名・リポジトリ名・トークンを入れ、暗号化パスワードを決めて「接続して同期」</li>
+        <li><b>もう1台の端末</b>：同じユーザー名・リポジトリ名・トークン・パスワードを入れて「接続して同期」（確認欄は空でOK）</li>
+      </ol>
+    </details>`;
+  if (syncCfg && syncCfg.token){
+    return `<div class="panel">
+      <h3>GitHub同期（暗号化）</h3>
+      <p>接続先：<b>${esc(syncCfg.owner)}/${esc(syncCfg.repo)}</b> の <code>${esc(syncCfg.path)}</code></p>
+      <div class="msg" id="syncInfo">${syncInfoHTML()}</div>
+      <button class="btn primary" id="syNow">今すぐ同期</button>
+      ${syncPass ? '<button class="btn" id="syLock">パスワードの記憶を消す</button>' : '<button class="btn" id="syUnlock">パスワードを入力</button>'}
+      <button class="btn danger" id="syOff">この端末の同期を解除</button>
+      <div class="note-box">GitHubには暗号化したデータだけが保存されます。この端末のブラウザの中には、すぐ表示できるよう暗号化していない記録も保存されています。端末には画面ロックをかけておいてください。</div>
+      ${howto}
+    </div>`;
+  }
+  return `<div class="panel">
+    <h3>GitHub同期（暗号化）</h3>
+    <p>記録を暗号化してGitHubのプライベートリポジトリに保存し、パソコンとiPhoneで同期します。パスワードはどこにも送信されず、GitHubには読めない形のデータだけが保存されます。</p>
+    <form id="syf" class="sync-grid" autocomplete="off">
+      <label class="field">GitHubのユーザー名<input name="owner" required placeholder="例：taro-yamada" autocapitalize="off"></label>
+      <label class="field">データ用リポジトリ名<input name="repo" required value="reading-notes-data" autocapitalize="off"></label>
+      <label class="field full">トークン（github_pat_…）<input name="token" type="password" required placeholder="github_pat_…" style="font-family:monospace"></label>
+      <label class="field">暗号化パスワード（8文字以上）<input name="pass" type="password" required minlength="8" autocomplete="new-password"></label>
+      <label class="field">パスワード（確認・はじめて設定する時だけ）<input name="pass2" type="password" autocomplete="new-password"></label>
+      <label class="field full" style="flex-direction:row;align-items:center;gap:6px;font-size:13px"><input type="checkbox" name="remember" checked> この端末にパスワードを記憶する（オフにするとアプリを開くたびに入力）</label>
+      <details class="full"><summary style="cursor:pointer;font-size:13px;color:var(--sub)">詳細設定</summary>
+        <label class="field" style="margin-top:8px;max-width:300px">保存するファイル名<input name="path" value="reading-notes.enc.json" autocapitalize="off"></label>
+      </details>
+      <div class="full"><button class="btn primary">接続して同期</button></div>
+    </form>
+    <div class="msg" id="sym"></div>
+    <div class="note-box"><b>パスワードは必ず控えておいてください。</b>忘れるとGitHub上のデータは誰にも（作者にも GitHub にも）元に戻せません。この端末に残っている記録は読めるので、その場合は「書き出す」で取り出せます。</div>
+    ${howto}
+  </div>`;
+}
+function bindSyncPanel(){
+  const $ = s => app.querySelector(s);
+  if ($('#syf')) $('#syf').onsubmit = async e => {
+    e.preventDefault();
+    const f = new FormData(e.target), msg = $('#sym');
+    const cfg = { owner: f.get('owner').trim(), repo: f.get('repo').trim(), path: (f.get('path') || 'reading-notes.enc.json').trim().replace(/^\/+/, ''), token: f.get('token').trim() };
+    const pass = f.get('pass'), pass2 = f.get('pass2'), remember = !!f.get('remember');
+    msg.className = 'msg'; msg.textContent = '接続を確認中…（数秒かかります）';
+    try {
+      const { env } = await fetchRemote(cfg);
+      if (env) await decryptEnvelope(env, pass);               // 既存データ：パスワードが合うか確認
+      else if (pass !== pass2) throw syncErr('confirm', 'はじめての設定です。確認欄にも同じパスワードを入力してください');
+      syncCfg = cfg;
+      try { localStorage.setItem(KEY_SYNC, JSON.stringify(cfg)); } catch(err){}
+      storePass(pass, remember);
+      await syncNow(false);
+      if (syncState.status === 'error') throw syncErr('x', syncState.msg);
+      toast(env ? 'GitHubのデータと同期しました' : 'GitHubに暗号化して保存しました');
+      renderSettings();
+    } catch(err){ msg.className = 'msg err'; msg.textContent = err.message; }
+  };
+  if ($('#syNow')) $('#syNow').onclick = () => syncState.status === 'locked' ? openUnlock() : syncNow(true);
+  if ($('#syUnlock')) $('#syUnlock').onclick = openUnlock;
+  if ($('#syLock')) $('#syLock').onclick = () => { storePass('', false); setSync('locked'); toast('パスワードの記憶を消しました'); renderSettings(); };
+  if ($('#syOff')) $('#syOff').onclick = () => confirmBox('この端末のGitHub同期を解除します（トークンとパスワードをこの端末から消します）。この端末の記録とGitHub上のデータは残ります。', () => {
+    try { localStorage.removeItem(KEY_SYNC); } catch(err){}
+    storePass('', false); syncCfg = null; setSync('off'); toast('同期を解除しました'); renderSettings();
+  }, '解除する');
+}
+
+function renderSettings(){
+  app.innerHTML = `
+    <h2 class="serif" style="margin:0 0 16px;font-size:22px">設定</h2>
+    <div class="panel">
+      <h3>Google Books APIキー</h3>
+      <p>キーなしだと世界中の利用者と共有の回数枠を使うため、「429」エラーで検索できないことがあります。無料で取得できる自分のキーを入れると、自分専用の枠（1日1,000回程度）で検索できます。キーはこのブラウザの中にだけ保存されます。</p>
+      <form id="kf" class="srow" style="max-width:560px">
+        <input id="kin" type="password" placeholder="AIza…" value="${esc(getApiKey())}" autocomplete="off" style="font-family:monospace">
+        <button class="btn primary">保存</button>
+        <button type="button" class="btn" id="ktest">接続テスト</button>
+      </form>
+      <div class="msg" id="kmsg">${getApiKey() ? '✓ キーが登録されています' : '未登録'}</div>
+      <details style="margin-top:6px"><summary style="cursor:pointer;font-size:13px;color:var(--sub)">キーの取り方（5分ほど）</summary>
+        <ol style="font-size:14px;margin:8px 0 0;padding-left:20px">
+          <li><a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> にGoogleアカウントでログイン（初回は利用規約に同意）</li>
+          <li>画面上部のプロジェクト選択 →「新しいプロジェクト」で適当な名前（例：reading-notes）を付けて作成</li>
+          <li>検索欄で「Books API」を検索 →「有効にする」</li>
+          <li>左メニュー「APIとサービス」→「認証情報」→「認証情報を作成」→「APIキー」</li>
+          <li>表示されたキー（AIza で始まる文字列）をコピーして、上の欄に貼り付けて保存</li>
+        </ol>
+        <p style="font-size:13px;margin-top:8px">Books APIは無料で使えます。支払い情報の登録は不要です。</p>
+      </details>
+    </div>
+    ${syncPanelHTML()}
+    <div class="panel">
+      <h3>バックアップ</h3>
+      <p>記録はこのブラウザの中にも保存されています。ここで書き出すファイルは<b>暗号化されていない</b>ので、iCloud Driveなど自分しか見られない場所に保存してください。</p>
+      <button class="btn primary" id="exp">データを書き出す（JSON）</button>
+      <button class="btn" id="imp">データを読み込む</button>
+    </div>
+    <div class="panel">
+      <h3>登録状況</h3>
+      <p>本 ${books.length}冊 ／ 学び ${books.reduce((n,b)=>n+b.notes.length,0)}件 ／ 行動メモ ${books.reduce((n,b)=>n+b.actions.length,0)}件</p>
+    </div>`;
+  app.querySelector('#exp').onclick = () => {
+    const blob = new Blob([JSON.stringify({ app:'reading-notes', version:1, exportedAt:new Date().toISOString(), books }, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `読書メモ_${today()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  };
+  app.querySelector('#imp').onclick = () => document.getElementById('importInput').click();
+  bindSyncPanel();
+  const kmsg = app.querySelector('#kmsg');
+  app.querySelector('#kf').onsubmit = e => {
+    e.preventDefault();
+    const v = app.querySelector('#kin').value.trim();
+    try { v ? localStorage.setItem(KEY_API, v) : localStorage.removeItem(KEY_API); } catch(err){}
+    kmsg.textContent = v ? '✓ キーを保存しました' : 'キーを削除しました';
+  };
+  app.querySelector('#ktest').onclick = async () => {
+    const v = app.querySelector('#kin').value.trim();
+    kmsg.textContent = 'テスト中…';
+    try {
+      const r = await fetch('https://www.googleapis.com/books/v1/volumes?maxResults=1&q=isbn:9784478025819' + (v ? '&key=' + encodeURIComponent(v) : ''));
+      if (r.ok) kmsg.textContent = '✓ 接続OK。検索できます' + (v ? '' : '（キーなし）');
+      else if (r.status === 429) kmsg.textContent = '✕ 429：回数上限です。' + (v ? 'キーの設定直後は数分かかることがあります' : 'キーを登録してください');
+      else if (r.status === 400 || r.status === 403) kmsg.textContent = '✕ ' + r.status + '：キーが正しくないか、Books API が有効になっていません';
+      else kmsg.textContent = '✕ エラー ' + r.status;
+    } catch(err){ kmsg.textContent = '✕ 接続できませんでした（ネットワークを確認してください）'; }
+  };
+}
+
+document.getElementById('importInput').onchange = async e => {
+  const f = e.target.files[0]; e.target.value=''; if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    const incoming = Array.isArray(data) ? data : data.books;
+    if (!Array.isArray(incoming)) throw new Error();
+    let added = 0, updated = 0;
+    incoming.forEach(nb => {
+      if (!nb || !nb.id || !nb.title) return;
+      nb.notes ||= []; nb.actions ||= []; nb.authors ||= [];
+      const i = books.findIndex(b => b.id === nb.id);
+      if (i < 0){ books.push(nb); added++; }
+      else if ((nb.updatedAt||0) > (books[i].updatedAt||0)){ books[i] = nb; updated++; }
+    });
+    save(); toast(`読み込みました（追加 ${added}冊・更新 ${updated}冊）`); render();
+  } catch(err){ toast('読み込めませんでした。書き出したJSONファイルを選んでください'); }
+};
+
+/* cover upload: resize to keep storage small */
+document.getElementById('coverInput').onchange = e => {
+  const f = e.target.files[0]; e.target.value=''; if (!f || !coverTarget) return;
+  const img = new Image();
+  img.onload = () => {
+    const H = 360, scale = Math.min(1, H / img.height);
+    const c = document.createElement('canvas'); c.width = Math.round(img.width*scale); c.height = Math.round(img.height*scale);
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    const b = getBook(coverTarget); b.cover = c.toDataURL('image/jpeg', 0.78); touch(b);
+    URL.revokeObjectURL(img.src); renderDetail();
+  };
+  img.onerror = () => toast('画像を読み込めませんでした');
+  img.src = URL.createObjectURL(f);
+};
+
+/* initial route */
+(function(){
+  const h = location.hash.slice(1);
+  if (h.startsWith('book-') && getBook(h.slice(5))){ view='detail'; currentId=h.slice(5); }
+  else if (['actions','settings','calendar'].includes(h)) view = h;
+  render();
+  initSync();
+})();
+document.getElementById('syncBtn').onclick = () => {
+  if (syncState.status === 'locked') openUnlock();
+  else if (syncState.status === 'error') go('settings');
+  else syncNow(true);
+};
+})();
+</script>
+</body>
+</html>

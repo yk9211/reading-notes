@@ -96,9 +96,18 @@
 
   /* detail */
   .back{margin-bottom:18px}
-  .detail{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start}
+  .detail{display:grid;grid-template-columns:200px 1fr;column-gap:36px;align-items:start}
+  .dt-cover{grid-row:1 / span 2}
+  .dt-head,.dt-body{grid-column:2}
+  .dt-head .badge{margin-bottom:4px}
+  .cover-btn{width:100%;margin-top:10px}
+  #editMeta{font-size:12px}
+  nav svg{display:none}
+  .menu-list{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+  .menu-list button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:var(--paper2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:52px}
+  .menu-list button small{color:var(--sub);font-size:12px}
+  .menu-list button.danger b{color:#a33}
   .detail .cover{cursor:pointer}
-  .cover-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .dt-title{font-size:28px;line-height:1.35;margin:0 0 6px}
   .dt-sub{color:var(--sub);font-size:14px;margin-bottom:18px}
   .fields{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;background:var(--paper2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:26px}
@@ -238,6 +247,110 @@
     .grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
     .search{max-width:none;margin-left:0}
   }
+
+  /* ================= スマホ（iPhone 17 Pro：幅402pt）向け ================= */
+  @media (max-width:720px){
+    body{overflow-x:hidden}
+    .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+
+    /* ヘッダー：ロゴと同期状態だけのコンパクト表示
+       （ぼかし効果があると、中の固定ボタンが画面ではなくヘッダー基準になるので外す） */
+    header{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--paper)}
+    .head{height:52px;flex-wrap:nowrap;padding-top:0;padding-bottom:0;gap:10px}
+    .logo{font-size:20px}
+    .sync-btn{font-size:11px;padding:4px 10px}
+
+    /* 下部タブバー（親指で届く位置） */
+    nav{position:fixed;left:0;right:0;bottom:0;z-index:30;margin:0;width:auto;order:0;
+        display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+        padding:6px max(8px,env(safe-area-inset-left)) calc(6px + env(safe-area-inset-bottom));
+        background:rgba(250,246,238,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+        border-top:1px solid var(--line)}
+    nav button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0 2px;border-radius:10px;font-size:10.5px;min-height:50px;color:#9a8e80}
+    nav button.on{background:none;box-shadow:none;color:var(--accent)}
+    nav svg{display:block;width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+    nav button.on svg{stroke-width:2.1}
+
+    /* 本を追加：右下に浮かぶ丸ボタン */
+    #addBtn{position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(76px + env(safe-area-inset-bottom));z-index:31;
+            width:58px;height:58px;padding:0;border-radius:50%;font-size:28px;line-height:1;display:flex;align-items:center;justify-content:center;
+            box-shadow:0 6px 18px rgba(181,83,42,.38),0 2px 4px rgba(0,0,0,.12)}
+    #addBtn .lbl{display:none}
+    body[data-view="detail"] #addBtn, body[data-view="settings"] #addBtn{display:none}
+    #addBtn .plus{margin-top:-2px}
+    main.wrap{padding-top:16px;padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+    .toast{bottom:calc(150px + env(safe-area-inset-bottom));max-width:calc(100% - 40px);text-align:center}
+
+    /* 本棚 */
+    .stats{grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+    .stat{padding:8px 6px;text-align:center;border-radius:10px}
+    .stat b{font-size:20px}
+    .stat small{font-size:10px;line-height:1.3;display:block}
+    .filters{gap:6px;margin-bottom:16px}
+    .search{order:-1;flex-basis:100%;max-width:none;margin:0 0 4px;padding:9px 14px}
+    .chip{padding:7px 14px;font-size:13px}
+    .grid{grid-template-columns:repeat(3,1fr);gap:18px 12px}
+    .card{gap:5px}
+    .card .ttl{font-size:12.5px;line-height:1.4}
+    .card .meta{font-size:11px;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+    .card .counts{font-size:10px;gap:6px}
+    .card .counts span:last-child:not(:first-child){display:none}
+    .badge{font-size:10px;padding:1px 7px}
+    .ph{padding:10px 8px}.ph .t{font-size:12px}.ph .a{font-size:9px}
+    @media (hover:none){ .card:hover .cover{transform:none;box-shadow:var(--shadow)} }
+
+    /* 本の詳細：表紙を小さく横に並べる */
+    .back{margin:-4px 0 8px -8px;padding:8px}
+    .detail{grid-template-columns:108px 1fr;column-gap:16px}
+    .dt-cover{grid-row:auto}
+    .dt-head{grid-column:2;align-self:center}
+    .dt-body{grid-column:1 / -1;margin-top:18px}
+    .cover-btn{font-size:12px;padding:6px 4px;margin-top:8px}
+    .dt-title{font-size:20px;line-height:1.4;margin:2px 0 4px}
+    .dt-sub{font-size:13px;margin-bottom:0;line-height:1.5}
+    .dt-pub{display:none}
+    .fields{grid-template-columns:1fr 1fr;gap:12px 10px;padding:14px;margin-bottom:22px}
+    .fields label:first-child{grid-column:1 / -1}
+    .fields input,.fields select{padding:9px 10px;min-height:42px;width:100%}
+    .stars button{font-size:30px;padding:0 3px}
+    .section h3{font-size:18px}
+    .kbd-hint{display:none}
+    .adder{flex-direction:column;align-items:stretch}
+    .adder textarea{min-height:76px}
+    .adder .btn{align-self:flex-end;min-width:96px;min-height:42px}
+    .item{padding:12px;gap:10px}
+    .item .ops{opacity:1;gap:0}
+    .icon{padding:8px 10px;font-size:15px}
+    #editMeta{padding:2px 4px;font-size:12px}
+    .check{width:26px;height:26px;border-radius:8px;margin-top:0}
+
+    /* ダイアログ：上寄せの全幅シート（キーボードに隠れない） */
+    .overlay{align-items:flex-start;padding:calc(env(safe-area-inset-top) + 10px) 10px 10px}
+    .modal{border-radius:18px;padding:18px 16px;max-height:calc(100dvh - env(safe-area-inset-top) - 20px);overflow:auto}
+    .results{max-height:52dvh}
+    .res{padding:10px;min-height:64px}
+    .manual{grid-template-columns:1fr}
+    .mfoot .btn{min-height:42px}
+
+    /* カレンダー */
+    .cal-head{flex-direction:column;align-items:stretch;gap:10px;margin-bottom:12px}
+    .cal-nav{justify-content:space-between}
+    .cal-nav h2{flex:1;min-width:0;font-size:20px;margin:0}
+    .cal-nav .btn.sm{min-width:40px;min-height:36px}
+    .cal-mode{justify-content:center}
+    .cal-mode .chip{flex:1}
+    .cal-cell{min-height:70px;padding:3px}
+    .cal-w{font-size:11px;padding:5px 0}
+    .cal-list .item{padding:10px}
+
+    /* 設定 */
+    .panel{padding:16px}
+    .sync-grid{grid-template-columns:1fr}
+    #kf{flex-wrap:wrap}
+    #kf input{flex-basis:100%}
+    .panel .btn{margin-bottom:6px}
+    .btn{min-height:38px}
+  }
 </style>
 </head>
 <body>
@@ -245,14 +358,14 @@
   <div class="wrap head">
     <h1 class="logo">読書<span>メモ</span></h1>
     <nav id="nav">
-      <button data-v="shelf">本棚</button>
-      <button data-v="calendar">カレンダー</button>
-      <button data-v="actions">行動メモ</button>
-      <button data-v="settings">設定</button>
+      <button data-v="shelf"><svg viewBox="0 0 24 24"><path d="M4 4h4v16H4zM10 4h4v16h-4zM16.2 4.6l3.8-1 3 15.4-3.8 1z" transform="translate(-1 0)"/></svg><span>本棚</span></button>
+      <button data-v="calendar"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>カレンダー</span></button>
+      <button data-v="actions"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 12.5l3 3 5.5-6.5"/></svg><span>行動メモ</span></button>
+      <button data-v="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>設定</span></button>
     </nav>
     <div class="spacer"></div>
     <button class="sync-btn" id="syncBtn" hidden></button>
-    <button class="btn primary" id="addBtn">＋ 本を追加</button>
+    <button class="btn primary" id="addBtn" aria-label="本を追加"><span class="plus">＋</span><span class="lbl"> 本を追加</span></button>
   </div>
 </header>
 <main class="wrap" id="app"></main>
@@ -773,6 +886,7 @@ document.getElementById('addBtn').onclick = openAdd;
 /* ---------- views ---------- */
 const app = document.getElementById('app');
 function render(){
+  document.body.dataset.view = (view === 'detail' && !getBook(currentId)) ? 'shelf' : view;
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === (view==='detail'?'shelf':view)));
   if (view === 'detail' && getBook(currentId)) return renderDetail();
   if (view === 'actions') return renderActions();
@@ -801,7 +915,7 @@ function renderShelf(){
       <div class="stat"><b>${books.length}</b><small>登録した本</small></div>
       <div class="stat"><b>${doneYear}</b><small>${year}年に読了</small></div>
       <div class="stat"><b>${notes}</b><small>学び・気付き</small></div>
-      <div class="stat"><b>${openActs}</b><small>未完了の行動メモ</small></div>
+      <div class="stat"><b>${openActs}</b><small>未完了の行動</small></div>
     </div>
     <div class="filters">
       ${[['all','すべて'],['reading','読書中'],['done','読了'],['want','読みたい']].map(([k,l])=>`<button class="chip ${filter===k?'on':''}" data-f="${k}">${l}</button>`).join('')}
@@ -827,19 +941,17 @@ function renderDetail(){
   app.innerHTML = `
     <button class="btn ghost back" id="back">← 本棚へ</button>
     <div class="detail">
-      <div>
-        <div class="cover" id="cv" title="クリックで表紙画像を変更">${coverHTML(b)}</div>
-        <div class="cover-tools">
-          ${toIsbn10(b.isbn)?'<button class="btn sm" id="cvAmz">Amazonから取得</button>':''}
-          <button class="btn sm" id="cvUrl">URLで設定</button>
-          <button class="btn sm" id="cvUp">画像ファイル</button>
-          ${b.cover?'<button class="btn sm ghost" id="cvDel">削除</button>':''}
-        </div>
+      <div class="dt-cover">
+        <div class="cover" id="cv" title="タップで表紙を変更">${coverHTML(b)}</div>
+        <button class="btn sm cover-btn" id="cvMenu">表紙を変更</button>
       </div>
-      <div>
-        <h2 class="dt-title" id="ttl" title="クリックで編集">${esc(b.title)}</h2>
-        <div class="dt-sub">${esc((b.authors||[]).join('、') || '著者未設定')}${b.publisher?' ／ '+esc(b.publisher):''}${b.publishedDate?' ／ '+esc(b.publishedDate):''}${b.isbn?' ／ ISBN '+esc(b.isbn):''}
-          <button class="icon" id="editMeta" title="書誌情報を編集">✎</button></div>
+      <div class="dt-head">
+        <span class="badge b-${b.status}">${STATUS[b.status]}</span>
+        <h2 class="dt-title" id="ttl" title="タップで編集">${esc(b.title)}</h2>
+        <div class="dt-sub">${esc((b.authors||[]).join('、') || '著者未設定')}${b.publisher?'<span class="dt-pub"> ／ '+esc(b.publisher)+'</span>':''}${b.publishedDate?'<span class="dt-pub"> ／ '+esc(b.publishedDate)+'</span>':''}${b.isbn?'<span class="dt-pub"> ／ ISBN '+esc(b.isbn)+'</span>':''}
+          <button class="icon" id="editMeta" title="書誌情報を編集">✎ 編集</button></div>
+      </div>
+      <div class="dt-body">
 
         <div class="fields">
           <label>ステータス
@@ -854,7 +966,7 @@ function renderDetail(){
 
         <div class="section">
           <h3>学び・気付き <span class="n">${b.notes.length}件</span></h3>
-          <p class="hint">印象に残った言葉、得られた視点、自分の考えの変化など。（Ctrl / ⌘ + Enter で追加）</p>
+          <p class="hint">印象に残った言葉、得られた視点、自分の考えの変化など。<span class="kbd-hint">（Ctrl / ⌘ + Enter で追加）</span></p>
           <div class="adder"><textarea id="noteIn" rows="2" placeholder="この本から得た学び・気付きを書く"></textarea><button class="btn primary" id="noteAdd">追加</button></div>
           <ul class="items">${b.notes.map(n=>`
             <li class="item note" data-id="${n.id}">
@@ -911,17 +1023,7 @@ function renderDetail(){
 
   $('#ttl').onclick = () => inlineEdit($('#ttl'), v => { if(v){ b.title=v; touch(b);} renderDetail(); }, true);
   $('#editMeta').onclick = () => editMeta(b);
-  const pickCover = () => { coverTarget = b.id; document.getElementById('coverInput').click(); };
-  $('#cv').onclick = pickCover; $('#cvUp').onclick = pickCover;
-  if ($('#cvDel')) $('#cvDel').onclick = () => { b.cover=''; b.coverAlts=[]; touch(b); renderDetail(); };
-  if ($('#cvAmz')) $('#cvAmz').onclick = () => {
-    const url = amazonCover(b.isbn);
-    testImage(url).then(ok => {
-      if (ok){ b.cover = url; b.coverAlts = []; touch(b); renderDetail(); toast('Amazonの表紙を設定しました'); }
-      else toast('Amazonにこの本の表紙が見つかりませんでした');
-    });
-  };
-  $('#cvUrl').onclick = () => coverUrlBox(b);
+  $('#cv').onclick = $('#cvMenu').onclick = () => coverMenu(b);
   $('#delBook').onclick = () => confirmBox(`「${b.title}」を削除します。学び・気付きと行動メモも消えます。よろしいですか？`, () => { markDeleted(b.id); books = books.filter(x=>x!==b); save(); toast('削除しました'); go('shelf'); });
 }
 
@@ -958,6 +1060,38 @@ function editMeta(b){
     b.authors = String(f.get('authors')).split(/[、,，]/).map(s=>s.trim()).filter(Boolean);
     b.publisher = f.get('publisher').trim(); b.publishedDate = f.get('publishedDate').trim(); b.isbn = f.get('isbn').trim();
     touch(b); ov.remove(); renderDetail();
+  };
+}
+
+function coverMenu(b){
+  const ov = document.createElement('div'); ov.className = 'overlay';
+  ov.innerHTML = `<div class="modal" style="max-width:420px">
+    <h2>表紙を変更</h2>
+    <div class="menu-list">
+      ${toIsbn10(b.isbn) ? '<button data-m="amz"><b>Amazonから取得</b><small>ISBNから表紙を探します</small></button>' : ''}
+      <button data-m="file"><b>写真・画像ファイルから選ぶ</b><small>カメラで撮った表紙も使えます</small></button>
+      <button data-m="url"><b>画像のURLを貼り付ける</b><small>Amazonなどの画像アドレス</small></button>
+      ${b.cover ? '<button data-m="del" class="danger"><b>表紙を外す</b></button>' : ''}
+    </div>
+    <div class="mfoot"><span></span><button class="btn ghost" id="cx">キャンセル</button></div></div>`;
+  document.body.appendChild(ov);
+  const close = () => ov.remove();
+  ov.addEventListener('click', e => { if (e.target === ov) close(); });
+  ov.querySelector('#cx').onclick = close;
+  ov.querySelector('.menu-list').onclick = e => {
+    const m = e.target.closest('button'); if (!m) return;
+    close();
+    if (m.dataset.m === 'file'){ coverTarget = b.id; document.getElementById('coverInput').click(); }
+    if (m.dataset.m === 'url') coverUrlBox(b);
+    if (m.dataset.m === 'del'){ b.cover = ''; b.coverAlts = []; touch(b); renderDetail(); }
+    if (m.dataset.m === 'amz'){
+      const url = amazonCover(b.isbn);
+      toast('Amazonで探しています…');
+      testImage(url).then(ok => {
+        if (ok){ b.cover = url; b.coverAlts = []; touch(b); renderDetail(); toast('Amazonの表紙を設定しました'); }
+        else toast('Amazonにこの本の表紙が見つかりませんでした');
+      });
+    }
   };
 }
 

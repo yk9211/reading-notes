@@ -137,6 +137,8 @@
   .check{width:20px;height:20px;border:2px solid #cbbfa9;border-radius:6px;background:#fff;flex:none;margin-top:3px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;padding:0}
   .check.on{background:var(--green);border-color:var(--green)}
   .item.done .txt{color:var(--sub);text-decoration:line-through}
+  .reason{width:100%;border:1px solid var(--line);border-left:3px solid var(--blue);border-radius:10px;padding:10px 12px;background:#fff;resize:vertical;min-height:76px;line-height:1.7}
+  .reason-saved{font-size:11px;color:var(--green);height:16px;margin-top:2px;text-align:right}
   .desc{font-size:13px;color:var(--sub);background:var(--paper2);border:1px dashed var(--line);border-radius:10px;padding:12px 14px;max-height:160px;overflow:auto}
 
   /* actions view */
@@ -872,7 +874,7 @@ function addBook(r){
   const b = {
     id: uid(), title: r.title, authors: r.authors||[], publisher: r.publisher||'', publishedDate: r.publishedDate||'',
     isbn: r.isbn||'', description: r.description||'', cover: r.cover||'', coverAlts: r.coverAlts||[],
-    status: 'reading', startDate: today(), endDate: '', rating: 0,
+    status: 'reading', startDate: today(), endDate: '', rating: 0, reason: '',
     notes: [], actions: [], createdAt: Date.now(), updatedAt: Date.now()
   };
   books.unshift(b); save();
@@ -909,7 +911,7 @@ function renderShelf(){
   const q = query.toLowerCase();
   const list = books
     .filter(b => filter==='all' || b.status===filter)
-    .filter(b => !q || (b.title + (b.authors||[]).join('') + b.notes.map(n=>n.text).join('')).toLowerCase().includes(q))
+    .filter(b => !q || (b.title + (b.authors||[]).join('') + (b.reason||'') + b.notes.map(n=>n.text).join('')).toLowerCase().includes(q))
     .sort((a,b) => (b.endDate||b.startDate||'').localeCompare(a.endDate||a.startDate||'') || b.createdAt - a.createdAt);
 
   if (!books.length){
@@ -925,7 +927,7 @@ function renderShelf(){
     </div>
     <div class="filters">
       ${[['all','すべて'],['reading','読書中'],['done','読了'],['want','読みたい']].map(([k,l])=>`<button class="chip ${filter===k?'on':''}" data-f="${k}">${l}</button>`).join('')}
-      <input class="search" id="q" placeholder="タイトル・著者・メモを検索" value="${esc(query)}">
+      <input class="search" id="q" placeholder="タイトル・著者・理由・メモを検索" value="${esc(query)}">
     </div>
     ${list.length ? `<div class="grid">${list.map(b => `
       <button class="card" data-id="${b.id}">
@@ -971,9 +973,16 @@ function renderDetail(){
         </div>
 
         <div class="section">
+          <h3>読もうと思った理由</h3>
+          <p class="hint">この本を手に取ったきっかけや、知りたかったこと・期待していたこと。</p>
+          <textarea id="reasonIn" class="reason" rows="3">${esc(b.reason||'')}</textarea>
+          <div class="reason-saved" id="reasonSaved"></div>
+        </div>
+
+        <div class="section">
           <h3>学び・気付き <span class="n">${b.notes.length}件</span></h3>
           <p class="hint">印象に残った言葉、得られた視点、自分の考えの変化など。<span class="kbd-hint">（Ctrl / ⌘ + Enter で追加）</span></p>
-          <div class="adder"><textarea id="noteIn" rows="2" placeholder="この本から得た学び・気付きを書く"></textarea><button class="btn primary" id="noteAdd">追加</button></div>
+          <div class="adder"><textarea id="noteIn" rows="2"></textarea><button class="btn primary" id="noteAdd">追加</button></div>
           <ul class="items">${b.notes.map(n=>`
             <li class="item note" data-id="${n.id}">
               <div style="flex:1"><div class="txt">${esc(n.text)}</div><div class="when">${new Date(n.createdAt).toLocaleDateString('ja-JP')}</div></div>
@@ -984,7 +993,7 @@ function renderDetail(){
         <div class="section">
           <h3>行動メモ <span class="n">未完了 ${openN} ／ 全 ${b.actions.length}件</span></h3>
           <p class="hint">読んだ内容を行動に移すための、具体的な次の一歩。</p>
-          <div class="adder"><textarea id="actIn" rows="1" placeholder="例：明日の朝会で〇〇を試してみる"></textarea><button class="btn primary" id="actAdd">追加</button></div>
+          <div class="adder"><textarea id="actIn" rows="1"></textarea><button class="btn primary" id="actAdd">追加</button></div>
           <ul class="items">${b.actions.map(a=>`
             <li class="item ${a.done?'done':''}" data-id="${a.id}">
               <button class="check ${a.done?'on':''}" data-act="toggle" aria-label="完了">${a.done?'✓':''}</button>
@@ -1010,6 +1019,19 @@ function renderDetail(){
   $('#ed').onchange = e => { b.endDate = e.target.value; if (b.endDate && b.status!=='done'){ b.status='done'; touch(b); renderDetail(); } else touch(b); };
   $('#stars').onclick = e => { const n = +e.target.dataset.n; if(!n) return; b.rating = b.rating===n ? 0 : n; touch(b); renderDetail(); };
 
+  const reasonIn = $('#reasonIn');
+  let reasonTimer = null;
+  const saveReason = () => {
+    clearTimeout(reasonTimer);
+    const v = reasonIn.value.trim();
+    if (v === (b.reason||'')) return;
+    b.reason = v; touch(b);
+    const m = $('#reasonSaved'); if (m){ m.textContent = '保存しました'; setTimeout(() => { if (m) m.textContent = ''; }, 1500); }
+  };
+  reasonIn.oninput = () => { clearTimeout(reasonTimer); reasonTimer = setTimeout(saveReason, 800); };
+  reasonIn.onblur = saveReason;
+  const autoGrow = () => { reasonIn.style.height = 'auto'; reasonIn.style.height = Math.max(reasonIn.scrollHeight + 2, 76) + 'px'; };
+  reasonIn.addEventListener('input', autoGrow); requestAnimationFrame(autoGrow);
   const addNote = () => { const v = $('#noteIn').value.trim(); if(!v) return; b.notes.unshift({id:uid(), text:v, createdAt:Date.now()}); touch(b); renderDetail(); app.querySelector('#noteIn').focus(); };
   const addAct = () => { const v = $('#actIn').value.trim(); if(!v) return; b.actions.push({id:uid(), text:v, done:false, createdAt:Date.now()}); touch(b); renderDetail(); app.querySelector('#actIn').focus(); };
   $('#noteAdd').onclick = addNote; $('#actAdd').onclick = addAct;
